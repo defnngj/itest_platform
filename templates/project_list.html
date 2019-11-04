@@ -1,0 +1,82 @@
+{% extends "manage.html" %}
+{% block manage %}
+<div class="card flex-fill">
+    <div class="card-header">
+        <h5 class="card-title mb-0" style="float:left">项目管理</h5>
+        <button onclick="add()" type="button" class="btn btn-primary" style="float:right">创建</button>
+    </div>
+    <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <div class="row">
+            <div class="col-sm-12 col-md-6"></div>
+            <div class="col-sm-12 col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="datatables-dashboard-traffic" class="table table-striped my-0 dataTable no-footer"
+                    role="grid" aria-describedby="datatables-dashboard-traffic_info">
+                    <thead>
+                        <tr role="row">
+                            <th>id</th>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for p in projects %}
+                        <tr role="row" class="odd">
+                            <td>{{ p.id }}</td>
+                            <td>{{ p.name }}</td>
+                            <td>{{ p.status }}</td>
+                            <td>{{ p.describe }}</td>
+                            <td>{{ p.create_time }}</td>
+                            <td>
+                                <a href="/project/edit/{{p.id}}/">编辑</a>
+                                <a>删除</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 翻页 -->
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="datatables-dashboard-traffic_info" role="status" aria-live="polite">
+                    Showing 1 to 8 of 8 entries
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="datatables-dashboard-traffic_paginate">
+                    <ul class="pagination">
+                        <li class="paginate_button page-item previous disabled"
+                            id="datatables-dashboard-traffic_previous">
+                            <a href="#" aria-controls="datatables-dashboard-traffic" data-dt-idx="0" tabindex="0"
+                                class="page-link">Previous</a>
+                        </li>
+                        <li class="paginate_button page-item active">
+                            <a href="#" aria-controls="datatables-dashboard-traffic" data-dt-idx="1" tabindex="0"
+                                class="page-link">1</a>
+                        </li>
+                        <li class="paginate_button page-item next disabled" id="datatables-dashboard-traffic_next">
+                            <a href="#" aria-controls="datatables-dashboard-traffic" data-dt-idx="2" tabindex="0"
+                                class="page-link">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function add() {
+        window.location.href = "/project/add"; 
+    }
+</script>
+
+{% endblock %}
