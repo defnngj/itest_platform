@@ -1,5 +1,7 @@
 {% extends "manage.html" %}
 {% block manage %}
+
+<!-- 项目列表 -->
 <div class="card flex-fill">
     <div class="card-header">
         <h5 class="card-title mb-0" style="float:left">项目管理</h5>
@@ -25,7 +27,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         {% for p in projects %}
                         <tr role="row" class="odd">
                             <td>{{ p.id }}</td>
@@ -73,6 +74,7 @@
         </div>
     </div>
 </div>
+
 <script>
     function add() {
         window.location.href = "/project/add"; 

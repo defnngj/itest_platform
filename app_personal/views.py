@@ -34,22 +34,9 @@ def login(request):
 
 @login_required
 def logout(request):
-    """退出"""
+    """
+    退出
+    """
     auth.logout(request)
     return HttpResponseRedirect("/")
 
-
-
-# /form_action.asp?fname=admin&lname=admin123456
-# /login_action/?username=admin&password=admin123456
-# Http 请求：不记录状态的。
-
-
-
-
-
-# django的处理过程：
-# 1、url指定路径 /hello/
-# 2、setting.py 找到url的配置文件。
-# 3、urls.py匹配路径 /hello/ ，把请求指到 views 文件
-# 4、再views.py 写 Response 的处理， 把 templates/ 目录下面的HTML文件，返回给客户端

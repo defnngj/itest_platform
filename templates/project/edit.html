@@ -1,5 +1,7 @@
 {% extends "manage.html" %}
 {% block manage %}
+
+<!-- 编辑项目 -->
 <div class="card flex-fill">
     <div class="card-header">
         <h5 class="card-title mb-0" style="float:left">编辑项目</h5>
@@ -23,14 +25,12 @@
                         <br>
                         <input type="submit" class="btn btn-primary" value="更新"/>
                     </form>
-
                 </div>
-
             </div>
         </div>
-
     </div>
 </div>
+
 <style>
     input[name='name'] {
         display: block;
@@ -64,4 +64,5 @@
     }
 
 </style>
+
 {% endblock %}

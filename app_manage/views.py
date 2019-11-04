@@ -12,11 +12,13 @@ def mange(request):
     """
     project_list = Project.objects.all()
     username = request.session.get('user', 'guest')
-    return render(request, "project_list.html", {"projects": project_list, "user": username})
+    return render(request, "project/list.html", {"projects": project_list, "user": username})
 
 
 def add_project(request):
-    """创建项目"""
+    """
+    创建项目
+    """
     if request.method == "POST":
         form = ProjectForm(request.POST)
         if form.is_valid():
@@ -29,11 +31,13 @@ def add_project(request):
         return HttpResponseRedirect("/project/")
     else:
         form = ProjectForm()
-    return render(request, 'project_add.html', {'form': form})
+    return render(request, 'project/add.html', {'form': form})
 
 
 def edit_project(request, pid):
-    print("pid", pid)
+    """
+    编辑项目
+    """
     if request.method == "POST":
         form = ProjectForm(request.POST)
         if form.is_valid():
@@ -53,5 +57,5 @@ def edit_project(request, pid):
             form = ProjectEditForm(instance=p)
         else:
             form = ProjectForm()
-        return render(request, 'project_edit.html', {
+        return render(request, 'project/edit.html', {
             'form': form, "id": pid})
