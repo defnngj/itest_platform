@@ -1,0 +1,82 @@
+{% extends "manage.html" %}
+{% block manage %}
+<div class="card flex-fill">
+    <div class="card-header">
+        <h5 class="card-title mb-0" style="float:left">编辑模块</h5>
+    </div>
+    <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <div class="row">
+            <div class="col-sm-12 col-md-6"></div>
+            <div class="col-sm-12 col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="margin-left: 20px;margin-right: 20px; width: 80%">
+                    <form action="/manage/module_edit/{{id}}/" method="post">
+                        <label>项目:</label>
+                        {{form.project}}<br>
+                        <label>名称:</label>
+                        {{form.name}} <br>
+                        <label>描述:</label>
+                        {{form.describe}}<br>
+                        {% csrf_token %}
+                        <br>
+                        <input type="submit" class="btn btn-primary" value="更新"/>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    select[name='project'] {
+        display: block;
+        width: 100%;
+        height: calc(1.8125rem + 2px);
+        padding: .25rem .7rem;
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .2rem;
+        transition: border-color .15s
+    }
+    input[name='name'] {
+        display: block;
+        width: 100%;
+        height: calc(1.8125rem + 2px);
+        padding: .25rem .7rem;
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .2rem;
+        transition: border-color .15s
+    }
+
+    textarea[name='describe']{
+        display: block;
+        width: 100%;
+        padding: .25rem .7rem;
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .2rem;
+        transition: border-color .15s
+    }
+
+</style>
+{% endblock %}

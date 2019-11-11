@@ -1,11 +1,9 @@
 {% extends "manage.html" %}
 {% block manage %}
-
-<!-- 项目列表 -->
 <div class="card flex-fill">
     <div class="card-header">
-        <h5 class="card-title mb-0" style="float:left">项目管理</h5>
-        <button onclick="add_project()" type="button" class="btn btn-primary" style="float:right">创建</button>
+        <h5 class="card-title mb-0" style="float:left">模块管理</h5>
+        <button onclick="module_add()" type="button" class="btn btn-primary" style="float:right">创建</button>
     </div>
     <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
         <div class="row">
@@ -21,22 +19,23 @@
                             <th>id</th>
                             <th>名称</th>
                             <th>描述</th>
-                            <th>状态</th>
+                            <th>项目</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for p in projects %}
+
+                        {% for m in modules %}
                         <tr role="row" class="odd">
-                            <td>{{ p.id }}</td>
-                            <td>{{ p.name }}</td>
-                            <td>{{ p.status }}</td>
-                            <td>{{ p.describe }}</td>
-                            <td>{{ p.create_time | date:"Y-m-d H:i:s" }}</td>
+                            <td>{{ m.id }}</td>
+                            <td>{{ m.name }}</td>
+                            <td>{{ m.describe }}</td>
+                            <td>{{ m.project }}</td>
+                            <td>{{ m.create_time |date:"Y-m-d H:i:s"}}</td>
                             <td>
-                                <a href="/manage/project_edit/{{p.id}}/">编辑</a>
-                                <a href="/manage/project_delete/{{p.id}}/">删除</a>
+                                <a href="/manage/module_edit/{{ m.id }}/">编辑</a>
+                                <a href="/manage/module_delete/{{ m.id }}/">删除</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -74,10 +73,9 @@
         </div>
     </div>
 </div>
-
 <script>
-    function add_project() {
-        window.location.href = "/manage/project_add/";
+    function module_add() {
+        window.location.href = "/manage/module_add/";
     }
 </script>
 

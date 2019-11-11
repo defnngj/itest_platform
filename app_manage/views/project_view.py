@@ -6,7 +6,7 @@ from app_manage.forms import ProjectForm, ProjectEditForm
 
 
 @login_required
-def mange(request):
+def mange_project(request):
     """
     项目管理
     """
@@ -25,10 +25,9 @@ def add_project(request):
             name = form.cleaned_data['name']
             describe = form.cleaned_data['describe']
             status = form.cleaned_data['status']
-            print("sss", status, type(status))
             Project.objects.create(name=name, describe=describe, status=status)
 
-        return HttpResponseRedirect("/project/")
+        return HttpResponseRedirect("/manage/")
     else:
         form = ProjectForm()
     return render(request, 'project/add.html', {'form': form})
@@ -50,7 +49,7 @@ def edit_project(request, pid):
             p.describe = describe
             p.status = status
             p.save()
-        return HttpResponseRedirect("/project/")
+        return HttpResponseRedirect("/manage/")
     else:
         if pid:
             p = Project.objects.get(id=pid)
@@ -59,3 +58,17 @@ def edit_project(request, pid):
             form = ProjectForm()
         return render(request, 'project/edit.html', {
             'form': form, "id": pid})
+
+
+def delete_project(request, pid):
+    """
+    删除项目
+    :param request:
+    :param pid:
+    """
+    if request.method == "GET":
+        p = Project.objects.get(id=pid)
+        p.delete()
+        return HttpResponseRedirect("/manage/")
+    else:
+        return HttpResponseRedirect("/manage/")

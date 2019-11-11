@@ -26,8 +26,7 @@ urlpatterns = [
     path('login/', personal_views.login),
     path('logout/', personal_views.logout),
 
-    # 项目管理
-    # path('mange/', manage_views.mange),
-    path('project/', include('app_manage.urls')),
+    # 项目/模块管理
+    path('manage/', include('app_manage.urls')),
 
 ]

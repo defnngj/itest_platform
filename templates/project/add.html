@@ -14,8 +14,13 @@
         <div class="row">
             <div class="col-sm-12">
                 <div style="margin-left: 20px;margin-right: 20px; width: 80%">
-                    <form action="/project/add" method="post">
-                        {{ form }}
+                    <form action="/manage/project_add/" method="post">
+                         <label>名称:</label>
+                        {{form.name}} <br>
+                        <label>描述:</label>
+                        {{form.describe}}<br>
+                        <label>状态:</label>
+                        {{form.status}}<br>
                         {% csrf_token %}
                         <br>
                         <input type="submit" class="btn btn-primary" value="创建">
