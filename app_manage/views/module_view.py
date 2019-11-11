@@ -10,7 +10,7 @@ def manage_module(request):
     """
     module_list = Module.objects.all()
     return render(request, "module/list.html", {
-        "modules": module_list})
+        "modules": module_list, "module": "active"})
 
 
 def add_module(request):
@@ -26,7 +26,7 @@ def add_module(request):
         return HttpResponseRedirect("/manage/module_list/")
     else:
         form = ModuleForm()
-    return render(request, 'module/add.html', {'form': form})
+    return render(request, 'module/add.html', {'form': form, "module": "active"})
 
 
 def edit_module(request, mid):
@@ -55,7 +55,7 @@ def edit_module(request, mid):
         else:
             form = ModuleForm()
         return render(request, 'module/edit.html', {
-            'form': form, "id": mid})
+            'form': form, "id": mid, "module": "active"})
 
 
 def delete_module(request, mid):
