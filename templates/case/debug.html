@@ -1,0 +1,162 @@
+{% extends "manage.html" %}
+{% block manage %}
+<div class="card flex-fill">
+    <div class="card-header">
+        <h5 class="card-title mb-0" style="float:left">创建用例</h5>
+    </div>
+    <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <div class="row">
+            <div class="col-sm-12 col-md-6"></div>
+            <div class="col-sm-12 col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="margin-left: 20px;margin-right: 20px; width: 80%">
+
+                    <!--URL-->
+                    <div class="input-group create-option">
+                        <span class="input-group-addon" style="margin-top: 5px;margin-right: 10px;">URL：</span>
+                        <input id="req_url" type="text" class="form-control" value="http">
+                    </div>
+
+                    <!--请求方法-->
+                    <div class="create-option">
+                        <label>* 请求方法：</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="req_method" id="get" value="get" checked> GET
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="req_method" id="post" value="post"> POST
+                        </label>
+                    </div>
+
+                    <!--请求头-->
+                    <div class="input-group">
+                        <span class="input-group-addon" style="margin-top: 5px;margin-right: 10px;">header：</span>
+                        <div class="input-group mb-3">
+                            <div class="input-group">
+                                <div id="headerEditor" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--参数类型-->
+                    <div style="margin-top: 10px;">
+                        <label>* 参数类型：</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="par_type" id="form" value="form" checked> form-data
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="par_type" id="json" value="json"> JSON
+                        </label>
+                    </div>
+
+                    <!--参数值-->
+                    <div class="input-group" style="height: 230px;">
+                        <span class="input-group-addon" style="margin-top: 5px;margin-right: 10px;">参数：</span>
+                        <div class="input-group mb-3">
+                            <div class="input-group">
+                                <div id="parameterEditor" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>说明：以字典的方式设置参数，如：{"id":1, "name":"名称"}</p>
+
+                    <!--发送按钮-->
+                    <div style="float: right;margin-right: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="sendFun()">发送</button>
+                    </div>
+
+                    <!--接口返回值-->
+                    <div style="margin-top: 30px;">
+                        <p>返回结果：</p>
+                        <textarea id="result" class="form-control" rows="10" name=textarea></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<link rel="stylesheet" href="/static/css/jquery.jsonview.css">
+<script src="/static/js/jquery.jsonview.js"></script>
+<link href="/static/css/jsoneditor.css" rel="stylesheet">
+<script src="/static/js/jsoneditor.js"></script>
+<script type="text/javascript">
+
+    //初始化JSONeditor编辑框
+    var headers = document.getElementById("headerEditor");
+    var parameters = document.getElementById("parameterEditor");
+    var options = {
+        mode: "code"
+    };
+    var headerEditor = new JSONEditor(headers, options);
+    var parameterEditor = new JSONEditor(parameters, options);
+
+    function sendFun() {
+        var req_url = $('#req_url').val();
+        var req_method = $('input[name="req_method"]:checked').val();
+        var req_type = $('input[name="par_type"]:checked').val();
+
+        var req_header = headerEditor.get();
+        var req_header_str = JSON.stringify(req_header, null, 2);
+        var req_parameter = parameterEditor.get();
+        var req_parameter_str = JSON.stringify(req_parameter, null, 2);
+        console.log("req_par", req_parameter_str);
+
+        if (req_url === ""){
+            window.alert("URL地址不能为空");
+            return;
+        }
+
+        $.get("/case/send_req/", {
+            url: req_url,
+            method: req_method,
+            header: req_header_str,
+            per_type: req_type,
+            per_value: req_parameter_str
+        },
+        function (resp) {
+            console.log("resp", resp);
+            if(resp.code == 10200) {
+                document.querySelector("#result").value = resp.data;
+            } else {
+                window.alert(resp.message);
+            }
+
+        });
+
+    }
+</script>
+
+<style>
+    .create-option {
+        height: 45px;
+    }
+    div.jsoneditor {
+        border: thin solid #ced4da;
+    }
+
+    div.jsoneditor-menu {
+        display: none;
+    }
+
+    .ace-jsoneditor .ace_gutter {
+        background: white;
+    }
+
+    div.jsoneditor-outer.has-main-menu-bar {
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+
+    .per-label {
+        margin-right: 10px;
+        margin-bottom: 4px;
+        font-size: 1rem;
+    }
+</style>
+
+{% endblock %}
