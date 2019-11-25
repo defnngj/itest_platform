@@ -124,12 +124,12 @@
     </div>
 </div>
 
-<script src="/static/js/jquery.min.js"></script>
-<link rel="stylesheet" href="/static/css/jquery.jsonview.css">
-<script src="/static/js/jquery.jsonview.js"></script>
+<link href="/static/css/jquery.jsonview.css" rel="stylesheet">
 <link href="/static/css/jsoneditor.css" rel="stylesheet">
-<script src="/static/js/jsoneditor.js"></script>
 <link href="/static/css/select2.min.css" rel="stylesheet" />
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery.jsonview.js"></script>
+<script src="/static/js/jsoneditor.js"></script>
 <script src="/static/js/select2.min.js"></script>
 <script src="/static/js/manage.js"></script>
 <script type="text/javascript">
@@ -204,34 +204,40 @@
 
     //保存用例
     function saveFun() {
-        //接口的基本数据
         var url = $("#req_url").val();
         var method = $('input[name="req_method"]:checked').val();
         var header = $("#header").val();
         var parameter_type = $('input[name="par_type"]:checked').val();
         var parameter_body = $("#parameter").val();
+        
         // 断言的数据
         var assert_type = $('input[name="assert_type"]:checked').val();
         var assert_text = $("#assert").val();
+        
         // 保存的数据
         var module_id = $('select[id="selectModule"]').val();
         var case_name = $("#case_name").val();
         if (url === "") {
             window.alert("URL不能为空！");
             return;
-        }else if (assert_type == "" || assert_text === ""){
-            window.alert("断言的类型或参数不能为空！");
+        }
+        
+        if (assert_text === ""){
+            window.alert("断言文本不能为空！");
             return;
         }
-        else if(case_name == ""){
+        
+        if(case_name == ""){
             window.alert("用例名称不能为空！");
             return;
-        } else if (module_id == "") {
+        }
+        
+        if (module_id == "") {
             window.alert("所属模块不能为空！");
             return;
         }
-        window.alert("parameter:" + parameter);
-        $.post("/testcase/save_case", {
+
+        $.post("/case/save_case/", {
             url: url,
             method: method,
             header: header,
@@ -254,6 +260,7 @@
     .create-option {
         height: 45px;
     }
+
     div.jsoneditor {
         border: thin solid #ced4da;
     }

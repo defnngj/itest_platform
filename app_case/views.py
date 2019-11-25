@@ -84,7 +84,7 @@ def assert_result(request):
 
 
 
-def testcase_save(request):
+def case_save(request):
     """
     用例创建/编辑保存
     """
