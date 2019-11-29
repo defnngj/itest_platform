@@ -12,7 +12,7 @@ def mange_project(request):
     """
     project_list = Project.objects.all()
     username = request.session.get('user', 'guest')
-    return render(request, "project/list.html", {"projects": project_list, "user": username, "project": "active"})
+    return render(request, "project/list.html", {"projects": project_list, "user": username})
 
 
 def add_project(request):
@@ -30,7 +30,7 @@ def add_project(request):
         return HttpResponseRedirect("/manage/")
     else:
         form = ProjectForm()
-    return render(request, 'project/add.html', {'form': form, "project": "active"})
+    return render(request, 'project/add.html', {'form': form})
 
 
 def edit_project(request, pid):
@@ -57,7 +57,7 @@ def edit_project(request, pid):
         else:
             form = ProjectForm()
         return render(request, 'project/edit.html', {
-            'form': form, "id": pid, "project": "active"})
+            'form': form, "id": pid})
 
 
 def delete_project(request, pid):

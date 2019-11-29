@@ -83,7 +83,6 @@ def assert_result(request):
         return JsonResponse({"result": "请求方法错误"})
 
 
-
 def case_save(request):
     """
     用例创建/编辑保存
@@ -157,11 +156,11 @@ def case_save(request):
             case.module_id = module_id
             case.url = url
             case.method = method_number
-            case.header=header
-            case.parameter_type=parameter_number
-            case.parameter_body=parameter_body
-            case.assert_type=assert_number
-            case.assert_text=assert_text
+            case.header = header
+            case.parameter_type = parameter_number
+            case.parameter_body = parameter_body
+            case.assert_type = assert_number
+            case.assert_text = assert_text
             case.save()
 
         return JsonResponse({"status": 10200, "message": "创建成功！"})

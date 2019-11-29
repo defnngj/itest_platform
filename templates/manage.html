@@ -22,7 +22,7 @@
                 </li>
 
                 <!--项目管理-->
-                <li class="sidebar-item {{project}}">
+                <li class="sidebar-item" id="project">
                     <a href="/manage/project_list/" class="sidebar-link" aria-expanded="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
@@ -38,7 +38,7 @@
 
 
                 <!--模块管理-->
-                <li class="sidebar-item {{module}}">
+                <li class="sidebar-item" id="module">
                     <a href="/manage/module_list/" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
@@ -54,7 +54,7 @@
                 </li>
 
                 <!--用例管理-->
-                <li class="sidebar-item {{case}}">
+                <li class="sidebar-item" id="case">
                     <a href="/case/" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
@@ -69,11 +69,10 @@
                         </svg>
                         <span class="align-middle">用例管理</span>
                     </a>
-
                 </li>
 
                 <!-- 任务管理 -->
-                <li class="sidebar-item {{task}}">
+                <li class="sidebar-item" id="task">
                     <a href="#layouts" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
@@ -89,7 +88,7 @@
                 </li>
 
                 <!-- Mock Server -->
-                <li class="sidebar-item ">
+                <li class="sidebar-item" id="mock">
                     <a href="#documentation" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
@@ -162,4 +161,25 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var local_url = document.location;
+        var path = local_url.pathname.split("/")[1];
+
+        if (path == "manage") {
+            console.log("aaa", path);
+            var path2 = local_url.pathname.split("/")[2];
+            if(path2 == "project_list"){
+                document.querySelector("#project").className += " active";
+            }
+            if(path2 == "module_list"){
+                document.querySelector("#module").className += " active";
+            }
+        } else if (path == "case") {
+            document.querySelector("#case").className += " active";
+        }
+
+    });
+</script>
 {% endblock %}
