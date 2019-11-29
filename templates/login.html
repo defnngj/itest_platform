@@ -1,55 +1,58 @@
-{% extends "base.html" %}
-{% block base %}
-<main id="content" role="main">
-    <div class="gradient-overlay-half-dark-v3 bg-img-hero">
-        <div class="d-lg-flex align-items-lg-center height-85vh--lg" style="background-color: #354052;">
-            <div class="container space-2 space-0--lg mt-lg-8">
-                <div class="row justify-content-lg-between align-items-lg-center">
-                    <div class="col-lg-5 mb-7 mb-lg-0">
-                        <!-- Title -->
-                        <span class="d-block text-white text-uppercase mb-2">@itest.info</span>
-                        <h1 class="display-4 font-size-48--md-down text-white mb-0">
-                            Interface automation test platform</h1>
-                        <!-- End Title -->
+<html>
+<head>
+    <link href="/static/css/theme.css" rel='stylesheet' type='text/css' />
+    <link href="/static/favicon.ico" rel="shortcut icon" type='text/css' />
+</head>
+
+<body>
+<div class="gradient-overlay-half-dark-v3 bg-img-hero" style="background-color: #354052">
+    <!-- Main Content -->
+    <div class="d-lg-flex align-items-lg-center height-85vh--lg">
+        <div class="container space-2 space-0--lg mt-lg-8">
+            <div class="row justify-content-lg-between align-items-lg-center">
+                <div class="col-lg-5 mb-7 mb-lg-0">
+                    <!-- Title -->
+                    <span class="d-block text-white text-uppercase mb-2">@itest.info</span>
+                    <h1 class="display-4 font-size-48--md-down text-white mb-0">Interface automation test platform</h1>
+                    <!-- End Title -->
+                </div>
+
+                <div class="col-lg-5">
+                    <!-- Signup Form -->
+                    <div class="bg-white shadow-sm rounded p-6">
+                        <form class="js-validate" novalidate="novalidate" action="/login/" method="post">
+                            <div class="mb-4">
+                                <h2 class="h4">账号登录</h2>
+                            </div>
+
+                            <div class="js-form-message mb-3">
+                                <div class="js-focus-state input-group input-group form">
+                                    <input type="text" class="form-control form__input" name="username" required=""
+                                           placeholder="Enter your username" aria-label="Enter your email address">
+                                </div>
+                            </div>
+
+                            <div class="js-form-message mb-3">
+                                <div class="js-focus-state input-group input-group form">
+                                    <input type="password" class="form-control form__input" name="password" required=""
+                                           placeholder="Enter your password" aria-label="Enter your password">
+                                </div>
+                            </div>
+                            {% if error != "" %}
+                                <div class="alert alert-danger" role="alert" style="padding-top: 0px;padding-bottom: 0px;">
+                                  {{ error }}
+                                </div>
+                            {% endif %}
+
+                            <button type="submit" class="btn btn-block btn-primary">登录</button>
+                        </form>
                     </div>
-
-                    <div class="col-lg-5">
-                         <!--登录表单-->
-                        <div class="bg-white shadow-sm rounded p-6">
-                            <form class="js-validate" novalidate="novalidate" action="/login/" method="post">
-                                <div class="mb-4">
-                                    <h2 class="h4">账号登录</h2>
-                                </div>
-
-                                <!-- 用户名 -->
-                                <div class="js-form-message mb-3">
-                                    <div class="js-focus-state input-group input-group form">
-                                        <input type="text" class="form-control form__input" name="username" required=""
-                                               placeholder="Enter your username" aria-label="Enter your username">
-                                    </div>
-                                </div>
-
-                                <!-- 密码 -->
-                                <div class="js-form-message mb-3">
-                                    <div class="js-focus-state input-group input-group form">
-                                        <input type="password" class="form-control form__input" name="password"
-                                               required="" placeholder="Enter your password"
-                                               aria-label="Enter your password">
-                                    </div>
-                                </div>
-
-                                {{ error }}
-                                <button type="submit" class="btn btn-block btn-primary">登录</button>
-                                {% csrf_token %}
-                            </form>
-                        </div>
-
-                    </div>
+                    <!-- End Signup Form -->
                 </div>
             </div>
         </div>
-
     </div>
-
-</main>
-{% endblock %}
+    <!-- End Main Content -->
+</div>
+</body>
+</html>
