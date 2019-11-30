@@ -18,21 +18,24 @@
                         <tr role="row">
                             <th>id</th>
                             <th>名称</th>
-                            <th>描述</th>
+                            <th>URL</th>
+                            <th>方法</th>
                             <th>项目</th>
+                            <th>模块</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        {% for m in modules %}
+                        {% for c in cases %}
                         <tr role="row" class="odd">
-                            <td>{{ m.id }}</td>
-                            <td>{{ m.name }}</td>
-                            <td>{{ m.describe }}</td>
-                            <td>{{ m.project }}</td>
-                            <td>{{ m.create_time |date:"Y-m-d H:i:s"}}</td>
+                            <td>{{ c.id }}</td>
+                            <td>{{ c.name }}</td>
+                            <td>{{ c.method }}</td>
+                            <td>{{ c.url }}</td>
+                            <td>{{ c.module.project }}</td>
+                            <td>{{ c.module }}</td>
+                            <td>{{ c.create_time |date:"Y-m-d H:i:s"}}</td>
                             <td>
                                 <a href="/manage/module_edit/{{ m.id }}/">编辑</a>
                                 <a href="/manage/module_delete/{{ m.id }}/">删除</a>

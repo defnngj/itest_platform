@@ -10,6 +10,14 @@ def list_case(request):
     """
     用例例表
     """
+    cases = TestCase.objects.all()
+    return render(request, "case/list.html", {"cases": cases})
+
+
+def add_case(request):
+    """
+    添加用例
+    """
     return render(request, "case/debug.html")
 
 
@@ -83,7 +91,7 @@ def assert_result(request):
         return JsonResponse({"result": "请求方法错误"})
 
 
-def case_save(request):
+def save_case(request):
     """
     用例创建/编辑保存
     """
@@ -92,23 +100,13 @@ def case_save(request):
         method = request.POST.get("method", "")
         header = request.POST.get("header", "")
         parameter_type = request.POST.get("par_type", "")
-        parameter_body = request.POST.get("par_body", "")
-        assert_type = request.POST.get("ass_type", "")
-        assert_text = request.POST.get("ass_text", "")
+        parameter_body = request.POST.get("per_value", "")
+        result_text = request.POST.get("result_text", "")
+        assert_type = request.POST.get("assert_type", "")
+        assert_text = request.POST.get("assert_text", "")
         module_id = request.POST.get("mid", "")
         name = request.POST.get("name", "")
         cid = request.POST.get("cid", "")
-
-        print("url", url)
-        print("method", method)
-        print("header", header)
-        print("parameter_type", parameter_type)
-        print("parameter_body", parameter_body)
-        print("assert_type", assert_type)
-        print("assert_text", assert_text)
-        print("module_id", module_id)
-        print("name", name)
-        print("cid", cid)
 
         if name == "":
             return JsonResponse({"status": 10101, "message": "用例名称不能为空"})
@@ -119,15 +117,10 @@ def case_save(request):
         if assert_type == "" or assert_text == "":
             return JsonResponse({"status": 10102, "message": "断言的类型或文本不能为空"})
 
-        # ...
         if method == "get":
             method_number = 1
         elif method == "post":
             method_number = 2
-        elif method == "delete":
-            method_number = 3
-        elif method == "put":
-            method_number = 4
         else:
             return JsonResponse({"status": 10104, "message": "未知的请求方法"})
 
@@ -146,10 +139,16 @@ def case_save(request):
             return JsonResponse({"status": 10104, "message": "未知的断言类型"})
 
         if cid == "":
-            ret = TestCase.objects.create(name=name, module_id=module_id,
-                                          url=url, method=method_number, header=header,
-                                          parameter_type=parameter_number, parameter_body=parameter_body,
-                                          assert_type=assert_number, assert_text=assert_text)
+            TestCase.objects.create(name=name,
+                                    module_id=module_id,
+                                    url=url,
+                                    header=header,
+                                    method=method_number,
+                                    parameter_type=parameter_number,
+                                    parameter_body=parameter_body,
+                                    result=result_text,
+                                    assert_type=assert_number,
+                                    assert_text=assert_text)
         else:
             case = TestCase.objects.get(id=cid)
             case.name = name
