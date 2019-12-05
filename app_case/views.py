@@ -3,6 +3,7 @@ import requests
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from app_manage.models import Project, Module
 from app_case.models import TestCase
 
@@ -10,7 +11,18 @@ from app_case.models import TestCase
 def list_case(request):
     """用例例表"""
     cases = TestCase.objects.all()
-    return render(request, "case/list.html", {"cases": cases})
+    p = Paginator(cases, 10)
+    page = request.GET.get("page", "")
+    if page == "":
+        page = 1
+
+    try:
+        page_cases = p.page(page)
+    except EmptyPage:
+        page_cases = p.page(p.num_pages)
+    except PageNotAnInteger:
+        page_cases = p.page(1)
+    return render(request, "case/list.html", {"cases": page_cases})
 
 
 def add_case(request):

@@ -51,25 +51,30 @@
         <div class="row">
             <div class="col-sm-12 col-md-5">
                 <div class="dataTables_info" id="datatables-dashboard-traffic_info" role="status" aria-live="polite">
-                    Showing 1 to 8 of 8 entries
+                    <!--Showing 1 to 8 of 8 entries-->
                 </div>
             </div>
             <div class="col-sm-12 col-md-7">
                 <div class="dataTables_paginate paging_simple_numbers" id="datatables-dashboard-traffic_paginate">
                     <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled"
-                            id="datatables-dashboard-traffic_previous">
-                            <a href="#" aria-controls="datatables-dashboard-traffic" data-dt-idx="0" tabindex="0"
-                                class="page-link">Previous</a>
-                        </li>
+                        {% if cases.has_previous %}
+                            <li class="paginate_button page-item previous"
+                                id="datatables-dashboard-traffic_previous">
+                                <a href="?page={{ cases.previous_page_number }}" aria-controls="datatables-dashboard-traffic" data-dt-idx="0" tabindex="0"
+                                    class="page-link">Previous</a>
+                            </li>
+                        {% endif %}
                         <li class="paginate_button page-item active">
                             <a href="#" aria-controls="datatables-dashboard-traffic" data-dt-idx="1" tabindex="0"
-                                class="page-link">1</a>
+                                class="page-link">{{cases.number}}</a>
                         </li>
-                        <li class="paginate_button page-item next disabled" id="datatables-dashboard-traffic_next">
-                            <a href="#" aria-controls="datatables-dashboard-traffic" data-dt-idx="2" tabindex="0"
+
+                        {% if cases.has_next %}
+                        <li class="paginate_button page-item next" id="datatables-dashboard-traffic_next">
+                            <a href="?page={{ cases.next_page_number }}" aria-controls="datatables-dashboard-traffic" data-dt-idx="2" tabindex="0"
                                 class="page-link">Next</a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

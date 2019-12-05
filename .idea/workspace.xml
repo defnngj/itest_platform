@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59c59a67-ca99-4741-ba79-6cf26c3eac08" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/static/js/case.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/case/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/itest_platform.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/itest_platform.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_case/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_case/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_case/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_case/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_case/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_case/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/manage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/case/debug.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/case/debug.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/case/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/case/list.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,7 +52,7 @@
           <entry key="html" value="795" />
           <entry key="js" value="111" />
           <entry key="md" value="45" />
-          <entry key="py" value="345" />
+          <entry key="py" value="363" />
           <entry key="txt" value="28" />
         </counts>
       </usages-collector>
@@ -73,18 +62,18 @@
           <entry key="JavaScript" value="111" />
           <entry key="Markdown" value="45" />
           <entry key="PLAIN_TEXT" value="29" />
-          <entry key="Python" value="345" />
+          <entry key="Python" value="363" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_case/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="224">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -139,11 +128,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/case/list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="92" column="24" lean-forward="true" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
+            <state relative-caret-position="858">
+              <caret line="79" column="18" selection-start-line="79" selection-start-column="18" selection-end-line="79" selection-end-column="18" />
               <folding>
                 <element signature="n#style#0;n#a#1;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
               </folding>
@@ -243,8 +232,8 @@
         <option value="$PROJECT_DIR$/templates/case/edit.html" />
         <option value="$PROJECT_DIR$/templates/case/debug.html" />
         <option value="$PROJECT_DIR$/app_case/urls.py" />
-        <option value="$PROJECT_DIR$/app_case/views.py" />
         <option value="$PROJECT_DIR$/templates/case/list.html" />
+        <option value="$PROJECT_DIR$/app_case/views.py" />
       </list>
     </option>
   </component>
@@ -633,22 +622,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_case/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/case/list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="858">
+          <caret line="79" column="18" selection-start-line="79" selection-start-column="18" selection-end-line="79" selection-end-column="18" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/case/list.html">
+    <entry file="file://$PROJECT_DIR$/app_case/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="92" column="24" lean-forward="true" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
+        <state relative-caret-position="224">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
           <folding>
-            <element signature="n#style#0;n#a#1;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
