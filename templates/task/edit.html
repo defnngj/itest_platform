@@ -1,0 +1,114 @@
+{% extends "task_list.html" %}
+{% block taskedit %}
+
+<div>
+	<!--编辑任务-->
+	<h4 class="sub-header">编辑任务</h4>
+
+	<div style="margin-top: 30px;">
+		<p>名称：</p>
+		<input id="name" class="form-control"></textarea>
+	</div>
+
+	<div style="margin-top: 10px;">
+		<p>描述：</p>
+		<textarea id="description" class="form-control" rows="3" name=textarea></textarea>
+	</div>
+
+	<div style="margin-top: 10px;">
+		<p>用例：</p>
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+
+	<div style="float: right; margin-top: 20px;">
+		<button type="button" class="btn btn-primary" onclick="saveFun()">保存</button>
+	</div>
+
+</div>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<link href="http://cdn.bootcss.com/zTree.v3/3.5.23/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+<script src="http://cdn.bootcss.com/zTree.v3/3.5.23/js/jquery.ztree.all.js"></script>
+<script type="text/javascript">
+
+	var zTreeObj;
+
+	// zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+	var setting = {
+		check: {
+			enable: true,
+			chkStyle: "checkbox"
+		}
+	};
+
+
+	$(document).ready(function () {
+		let local_url = document.location;
+		let tid = local_url.pathname.split("/")[3];
+		console.log("任务id", tid);
+
+		// 调用获取用例树
+		$.post("/testtask/get_case_tree/", {
+			"tid": tid,
+		}, function (resp) {
+			if (resp.status === 10200) {
+				document.querySelector("#name").value = resp.data.name;
+				document.querySelector("#description").value = resp.data.desc;
+
+				var zNodes = resp.data.cases;
+				zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+				zTreeObj.expandAll(true);  //设置默认展开    
+			}
+
+		});
+
+	});
+
+	//保存用例
+	function saveFun() {
+
+		let local_url = document.location;
+		let tid = local_url.pathname.split("/")[3];
+
+		//接口的基本数据
+		let name = $("#name").val();
+		let desc = $('#description').val();
+
+
+		if (name === "") {
+			window.alert("任务名称不能为空！");
+			return;
+		}
+
+		var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+		var nodes = treeObj.getCheckedNodes(true);
+
+		var cases = new Array();
+		for (var i = 0; i < nodes.length; i++) {
+			if (nodes[i].isParent == false) {
+				console.log("节点id:" + nodes[i].id);  //获取选中节点的值
+				cases.push(nodes[i].id);
+			}
+
+		}
+		// 将列表转为字符串
+		casesStr = JSON.stringify(cases)
+
+		$.post("/testtask/save_task/", {
+				task_id: tid,
+				name: name,
+				desc: desc,
+				cases: casesStr
+			},
+			function (resp) {
+				if (resp.status == 10200) {
+					window.alert("创建任务成功！")
+				}
+			});
+	};
+
+</script>
+
+{% endblock %}

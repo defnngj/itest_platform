@@ -73,7 +73,7 @@
 
                 <!-- 任务管理 -->
                 <li class="sidebar-item" id="task">
-                    <a href="#layouts" class="sidebar-link collapsed">
+                    <a href="/task/" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -178,6 +178,8 @@
             }
         } else if (path == "case") {
             document.querySelector("#case").className += " active";
+        } else if (path == "task") {
+            document.querySelector("#task").className += " active";
         }
 
     });

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'app_personal',
     'app_manage',
     'app_case',
+    'app_task',
 ]
 
 MIDDLEWARE = [
