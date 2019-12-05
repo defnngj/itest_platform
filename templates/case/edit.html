@@ -2,7 +2,7 @@
 {% block manage %}
 <div class="card flex-fill">
     <div class="card-header">
-        <h5 class="card-title mb-0" style="float:left">创建用例</h5>
+        <h5 class="card-title mb-0" style="float:left">编辑用例</h5>
     </div>
     <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
         <div class="row">
@@ -13,14 +13,14 @@
             <div class="col-sm-12">
                 <div style="margin-left: 20px;margin-right: 20px; width: 80%">
 
-                    <!--URL-->
-                    <div class="input-group create-option">
-                        <span class="input-group-addon" style="margin-top: 5px;margin-right: 10px;">URL：</span>
+                    <!-- URL -->
+                    <div class="input-group option">
+                        <span class="input-group-addon option-tile">URL：</span>
                         <input id="req_url" type="text" class="form-control" value="http">
                     </div>
 
-                    <!--请求方法-->
-                    <div class="create-option">
+                    <!-- 请求方法 -->
+                    <div class="option">
                         <label>* 请求方法：</label>
                         <label class="radio-inline">
                             <input type="radio" name="req_method" id="get" value="get" checked> GET
@@ -30,9 +30,9 @@
                         </label>
                     </div>
 
-                    <!--请求头-->
+                    <!-- 请求头 -->
                     <div class="input-group">
-                        <span class="input-group-addon" style="margin-top: 5px;margin-right: 10px;">header：</span>
+                        <span class="input-group-addon option-tile">header</span>
                         <div class="input-group mb-3">
                             <div class="input-group">
                                 <div id="headerEditor" style="width: 100%"></div>
@@ -40,7 +40,6 @@
                         </div>
                     </div>
 
-                    <!--参数类型-->
                     <div style="margin-top: 10px;">
                         <label>* 参数类型：</label>
                         <label class="radio-inline">
@@ -51,9 +50,8 @@
                         </label>
                     </div>
 
-                    <!--参数值-->
                     <div class="input-group" style="height: 230px;">
-                        <span class="input-group-addon" style="margin-top: 5px;margin-right: 10px;">参数：</span>
+                        <span class="input-group-addon option-tile">参数：</span>
                         <div class="input-group mb-3">
                             <div class="input-group">
                                 <div id="parameterEditor" style="width: 100%"></div>
@@ -62,81 +60,78 @@
                     </div>
                     <p>说明：以字典的方式设置参数，如：{"id":1, "name":"名称"}</p>
 
-                    <!--发送按钮-->
                     <div style="float: right;margin-right: 10px;">
                         <button type="button" class="btn btn-primary" onclick="sendFun()">发送</button>
                     </div>
 
-                    <!--接口返回值-->
                     <div style="margin-top: 30px;">
                         <p>返回结果：</p>
                         <textarea id="result" class="form-control" rows="10" name=textarea></textarea>
                     </div>
 
-                    <!--断言按钮-->
-                    <div style="float: right;margin-right: 10px; margin-top: 15px">
+                    <!-- 断言按钮 -->
+                    <div  style="float: right;margin-right: 10px; margin-top: 20px; height: 50px;">
                         <button type="button" class="btn btn-primary" onclick="assertFun()">断言</button>
                     </div>
 
-                    <!--断言类型-->
-                    <div style="margin-top: 25px">
-                        <label>* 断言类型：</label>
+                    <div style="margin-top: 30px;">
+                        <label> 断言方法：</label>
                         <label class="radio-inline">
                             <input type="radio" name="assert_type" id="include" value="include" checked> 包含
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="assert_type" id="equal" value="equal"> 匹配
+                            <input type="radio" name="assert_type" id="equal" value="equal"> 相等
                         </label>
                     </div>
 
-                    <!--断言内容-->
                     <div style="margin-top: 10px;">
-                        <textarea id="assert" class="form-control" rows="5" name=textarea></textarea>
+                        <textarea id="assert" class="form-control" rows="10" name=textarea></textarea>
                     </div>
 
-                    <!--项目/模块-->
-                    <div style="margin-top: 20px;">
-                        <label style="float: left; margin-bottom: 0px;margin-top: 8px;">项目/模块：</label>
+                    <!-- 选择项目/模块 -->
+                    <div class="form-group" style="margin-top: 20px; height: 30px;">
+                        <label style="float: left; margin-bottom: 0px; margin-top: 8px;">项目/模块：</label>
                         <span style="float: left">
-                            <select class="form-control select2-single" id="selectProject"
+                            <select class="form-control" id="selectProject"
                                     style="width: 180px">
                             </select>
                         </span>
                         <span style="float: left">
-                            <select class="form-control select2-single" id="selectModule"
+                            <select class="form-control" id="selectModule"
                                     style="width: 180px">
                             </select>
                         </span>
                     </div>
 
-                    <!--用例名称-->
-                    <div class="input-group" style="top:10px">
-                        <span class="input-group-addon" style="margin-top: 5px;margin-right: 10px;">名称:</span>
+                    <!-- 用例的名称 -->
+                    <div class="input-group option">
+                        <span class="input-group-addon option-tile">名称：</span>
                         <input id="case_name" type="text" class="form-control">
                     </div>
 
-                    <div style="float: right; margin-top: 20px; height: 50px">
+                    <!-- 保存用例 -->
+                    <div style="float: right;margin-right: 10px; margin-top: 20px; height: 50px;">
                         <button type="button" class="btn btn-primary" onclick="saveFun()">保存</button>
                     </div>
                 </div>
+
             </div>
         </div>
 
     </div>
 </div>
 
-<link href="/static/css/jquery.jsonview.css" rel="stylesheet">
-<link href="/static/css/jsoneditor.css" rel="stylesheet">
-<link href="/static/css/select2.min.css" rel="stylesheet"/>
 <script src="/static/js/jquery.min.js"></script>
+<link rel="stylesheet" href="/static/css/jquery.jsonview.css">
 <script src="/static/js/jquery.jsonview.js"></script>
+<link href="/static/css/jsoneditor.css" rel="stylesheet">
 <script src="/static/js/jsoneditor.js"></script>
-<script src="/static/js/select2.min.js"></script>
 <script src="/static/js/manage.js"></script>
+<script src="/static/js/case.js"></script>
 <script type="text/javascript">
 
-    //初始化项目和模块select
-    SelectInit();
+    //获取用例的信息
+    getCaseInfo();
 
     //初始化JSONeditor编辑框
     var headers = document.getElementById("headerEditor");
@@ -147,115 +142,114 @@
     var headerEditor = new JSONEditor(headers, options);
     var parameterEditor = new JSONEditor(parameters, options);
 
-    // 发送方法
     function sendFun() {
         var url = $('#req_url').val();
         var method = $('input[name="req_method"]:checked').val();
-        var par_type = $('input[name="par_type"]:checked').val();
+        var parameter_type = $('input[name="par_type"]:checked').val();
 
         var header = headerEditor.get();
         var header_str = JSON.stringify(header, null, 2);
         var parameter_body = parameterEditor.get();
         var parameter_body_str = JSON.stringify(parameter_body, null, 2);
 
-        if (req_url === "") {
+        if (req_url == ""){
             window.alert("URL地址不能为空");
             return;
         }
 
         $.get("/case/send_req/", {
-                url: url,
-                method: method,
-                header: header_str,
-                par_type: par_type,
-                par_value: parameter_body_str
-            },
-            function (resp) {
-                if (resp.code == 10200) {
-                    document.querySelector("#result").value = resp.data;
-                } else {
-                    window.alert(resp.message);
-                }
-            });
+            url: url,
+            method: method,
+            header: header_str,
+            par_type: parameter_type,
+            par_value: parameter_body_str,
+        },
+        function (resp) {
+            if(resp.code == 10200) {
+                document.querySelector("#result").value = resp.data;
+            } else {
+                window.alert(resp.message);
+            }
 
+        });
     }
 
-    //断言方法
     function assertFun() {
-        var result_text = $("#result").val();
+        var result_text = $('#result').val();
         var assert_type = $('input[name="assert_type"]:checked').val();
-        var assert_text = $("#assert").val();
+        var assert_text = $('#assert').val();
 
-        if (result_text === "" || assert_text === "") {
-            window.alert("要断言的文本不能为空");
-            return;
+        if(result_text == "" || assert_text == ""){
+            window.alert("断言的结果不能为空！");
         }
+
         $.post("/case/assert_result/", {
             result_text: result_text,
             assert_type: assert_type,
             assert_text: assert_text,
-        }, function (resp) {
-            window.alert(resp.message);
+            }, function (resp) {
+                window.alert(resp.message);
         });
     }
 
-    //保存用例
+    // 保存用例
     function saveFun() {
-        var url = $("#req_url").val();
+        let currentURL = window.location.href;
+        var caseId = currentURL.split("/")[5];
+        var url = $('#req_url').val();
         var method = $('input[name="req_method"]:checked').val();
-        var header = $("#header").val();
         var parameter_type = $('input[name="par_type"]:checked').val();
-        var parameter_body = $("#parameter").val();
+        var header = headerEditor.get();
+        var header_str = JSON.stringify(header, null, 2);
+        var parameter_body = parameterEditor.get();
+        var parameter_body_str = JSON.stringify(parameter_body, null, 2);
 
-        // 断言的数据
-        var result_text = $("#result").val();
+        var result_text = $('#result').val();
+        var assert_text = $('#assert').val();
         var assert_type = $('input[name="assert_type"]:checked').val();
-        var assert_text = $("#assert").val();
 
-        // 保存的数据
         var module_id = $('select[id="selectModule"]').val();
-        var case_name = $("#case_name").val();
-        if (url === "") {
-            window.alert("URL不能为空！");
-            return;
-        }
+        var name = $("#case_name").val();
 
-        if (assert_text === "") {
-            window.alert("断言文本不能为空！");
-            return;
-        }
-
-        if (case_name == "") {
-            window.alert("用例名称不能为空！");
-            return;
-        }
-
-        if (module_id == "") {
-            window.alert("所属模块不能为空！");
+        if (req_url == "") {
+            window.alert("URL地址不能为空");
             return;
         }
 
         $.post("/case/save_case/", {
+            mid: module_id,
+            cid: caseId,
+            name: name,
             url: url,
             method: method,
-            header: header,
+            header: header_str,
             par_type: parameter_type,
-            par_value: parameter_body,
+            par_value: parameter_body_str,
             result_text: result_text,
-            assert_type: assert_type,
             assert_text: assert_text,
-            mid: module_id,
-            name: case_name,
-        }, function (resp) {
-             alert(resp.message);
+            assert_type: assert_type,
+
+        },function (resp) {
+            if (resp.code == 10200) {
+                window.alert(resp.message);
+            } else {
+                window.alert(resp.message);
+            }
+
         });
+
     }
 
 </script>
 
 <style>
-    .create-option {
-        height: 45px;
+    .option {
+        height: 50px;
+    }
+
+    .option-tile {
+        margin-top: 5px;
+        margin-right: 10px;
     }
 
     div.jsoneditor {

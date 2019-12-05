@@ -2,23 +2,36 @@ import json
 import requests
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
 from app_manage.models import Project, Module
 from app_case.models import TestCase
 
 
 def list_case(request):
-    """
-    用例例表
-    """
+    """用例例表"""
     cases = TestCase.objects.all()
     return render(request, "case/list.html", {"cases": cases})
 
 
 def add_case(request):
-    """
-    添加用例
-    """
+    """添加用例"""
     return render(request, "case/debug.html")
+
+
+def edit_case(request, cid):
+    """编辑用例"""
+    return render(request, "case/edit.html")
+
+
+def delete_case(request):
+    """删除用例"""
+    if request.method == "POST":
+        cid = request.POST.get("cid", "")
+        case = TestCase.objects.get(id=cid)
+        case.delete()
+        return JsonResponse({"code": 10200, "message": "success"})
+    else:
+        return JsonResponse({"code": 10100, "message": "请求方法错误"})
 
 
 def send_req(request):
@@ -29,8 +42,8 @@ def send_req(request):
         url = request.GET.get("url", "")
         method = request.GET.get("method", "")
         header = request.GET.get("header", "")
-        per_type = request.GET.get("per_type", "")
-        per_value = request.GET.get("per_value", "")
+        par_type = request.GET.get("par_type", "")
+        par_value = request.GET.get("par_value", "")
 
         if url == "":
             return JsonResponse({"code": 10101, "message": "URL不能为空！"})
@@ -41,21 +54,21 @@ def send_req(request):
             return JsonResponse({"code": 10102, "message": "Header格式错误，必须是标准的JSON格式！"})
 
         try:
-            per_value = json.loads(per_value)
+            par_value = json.loads(par_value)
         except json.decoder.JSONDecodeError:
             return JsonResponse({"code": 10103,
                                  "message": "参数格式错误，必须是标准的JSON格式！"})
 
         resp_data = ""
         if method == "get":
-            r = requests.get(url, params=per_value, headers=header)
+            r = requests.get(url, params=par_value, headers=header)
             resp_data = r.text
         if method == "post":
-            if per_type == "form":
-                r = requests.post(url, data=per_value, headers=header)
+            if par_type == "form":
+                r = requests.post(url, data=par_value, headers=header)
                 resp_data = r.text
-            if per_type == "json":
-                r = requests.post(url, json=per_value, headers=header)
+            if par_type == "json":
+                r = requests.post(url, json=par_value, headers=header)
                 resp_data = r.text
 
         return JsonResponse({"code": 10200, "message": "success", "data": resp_data})
@@ -66,29 +79,32 @@ def assert_result(request):
     断言结果
     """
     if request.method == "POST":
-        result_text = request.POST.get("result", "")
-        assert_text = request.POST.get("assert", "")
+        result_text = request.POST.get("result_text", "")
         assert_type = request.POST.get("assert_type", "")
+        assert_text = request.POST.get("assert_text", "")
+        print("-------->", result_text)
+        print(assert_type)
+        print(assert_text)
 
         if result_text == "" or assert_text == "":
-            return JsonResponse({"result": "断言的文本不能为空"})
+            return JsonResponse({"code": 10101, "message": "断言的参数不能为空"})
 
-        if assert_type == "contains":
-            assert_list = assert_text.split(">>")
-            for assert_value in assert_list:
-                if assert_value not in result_text:
-                    return JsonResponse({"result": "断言失败"})
-                else:
-                    return JsonResponse({"result": "断言成功"})
+        if assert_type != "include" and assert_type != "equal":
+            return JsonResponse({"code": 10101, "message": "断言的参数不能为空"})
 
-        elif assert_type == "mathches":
-            if assert_text != result_text:
-                return JsonResponse({"result": "断言失败"})
+        if assert_type == "include":
+            if assert_text in result_text:
+                return JsonResponse({"code": 10200, "message": "断言包含成功"})
             else:
-                return JsonResponse({"result": "断言成功"})
+                return JsonResponse({"code": 10200, "message": "断言包含失败"})
 
-    else:
-        return JsonResponse({"result": "请求方法错误"})
+        if assert_type == "equal":
+            if assert_text == result_text:
+                return JsonResponse({"code": 10200, "message": "断言相等成功"})
+            else:
+                return JsonResponse({"code": 10200, "message": "断言相等失败"})
+
+        return JsonResponse({"code": 10102, "message": "fail"})
 
 
 def save_case(request):
@@ -100,13 +116,15 @@ def save_case(request):
         method = request.POST.get("method", "")
         header = request.POST.get("header", "")
         parameter_type = request.POST.get("par_type", "")
-        parameter_body = request.POST.get("per_value", "")
+        parameter_body = request.POST.get("par_value", "")
         result_text = request.POST.get("result_text", "")
         assert_type = request.POST.get("assert_type", "")
         assert_text = request.POST.get("assert_text", "")
         module_id = request.POST.get("mid", "")
         name = request.POST.get("name", "")
         cid = request.POST.get("cid", "")
+
+        print("parameter_type", parameter_type)
 
         if name == "":
             return JsonResponse({"status": 10101, "message": "用例名称不能为空"})
@@ -131,9 +149,9 @@ def save_case(request):
         else:
             return JsonResponse({"status": 10104, "message": "未知的参数类型"})
 
-        if assert_type == "contains":
+        if assert_type == "include":
             assert_number = 1
-        elif assert_type == "mathches":
+        elif assert_type == "equal":
             assert_number = 2
         else:
             return JsonResponse({"status": 10104, "message": "未知的断言类型"})
@@ -149,21 +167,21 @@ def save_case(request):
                                     result=result_text,
                                     assert_type=assert_number,
                                     assert_text=assert_text)
+            return JsonResponse({"status": 10200, "message": "创建成功！"})
         else:
             case = TestCase.objects.get(id=cid)
             case.name = name
             case.module_id = module_id
             case.url = url
-            case.method = method_number
             case.header = header
+            case.method = method_number
             case.parameter_type = parameter_number
             case.parameter_body = parameter_body
+            case.result = result_text,
             case.assert_type = assert_number
             case.assert_text = assert_text
             case.save()
-
-        return JsonResponse({"status": 10200, "message": "创建成功！"})
-
+        return JsonResponse({"status": 10200, "message": "保存成功！"})
     else:
         return JsonResponse({"status": 10100, "message": "请求方法错误"})
 
@@ -205,23 +223,11 @@ def get_case_info(request):
     if request.method == "POST":
         cid = request.POST.get("cid", "")
         case = TestCase.objects.get(id=cid)
-        module = Module.objects.get(id=case.module.id)
-        project_id = module.project.id
-
-        case_dict = {
-            "id": case.id,
-            "url": case.url,
-            "name": case.name,
-            "method": case.method,
-            "header": case.header,
-            "parameter_type": case.parameter_type,
-            "parameter_body": case.parameter_body,
-            "assert_type": case.assert_type,
-            "assert_text": case.assert_text,
-            "module_id": case.module.id,
-            "project_id": project_id,
-        }
-        return JsonResponse({"status": 10200, "message": "请求成功", "data": case_dict})
-
+        module = Module.objects.get(id=case.module_id)
+        case_info = model_to_dict(case)
+        case_info["project"] = module.project_id
+        return JsonResponse({"code": 10200,
+                             "message": "success",
+                             "data": case_info})
     else:
-        return JsonResponse({"status": 10100, "message": "请求方法错误"})
+        return JsonResponse({"code": 10100, "message": "请求方法错误"})

@@ -7,7 +7,7 @@ var SelectInit = function (defaultProjectId, defaultModuleId) {
 
     //设置默认选项
     function setDefaultOption(obj, id) {
-        for (var i = 0; i < obj.options.length; i++) {
+        for (let i = 0; i < obj.options.length; i++) {
             if (obj.options[i].value === id) {
                 obj.selectedIndex = i;
                 return;
@@ -26,14 +26,11 @@ var SelectInit = function (defaultProjectId, defaultModuleId) {
     //改变项目
     function changeProject() {
         cmbModule.options.length = 0;
-        console.log("项目默认选项的索引", cmbProject.selectedIndex);
         var pid = cmbProject.options[cmbProject.selectedIndex].value;
-        console.log("这个才是真的项目id", pid);
 
-        for (var i = 0; i < dataList.length; i++) {
+        for (let i = 0; i < dataList.length; i++) {
             if(dataList[i].id == pid) {
                 var modules = dataList[i].moduleList;
-                console.log("对应的模块列表", modules);
                 for(var j=0; j< modules.length; j++){
                     addOption(cmbModule, modules[j]);
                 }
@@ -49,10 +46,8 @@ var SelectInit = function (defaultProjectId, defaultModuleId) {
         $.get("/case/get_select_data/", {}, function (resp) {
             if (resp.status === 10200) {
                 dataList = resp.data;
-                console.log("想要的数据格式-->", dataList);
                 //遍历项目
-                for (var i = 0; i < dataList.length; i++) {
-                    console.log("每一个项目的数据", dataList[i]);
+                for (let i = 0; i < dataList.length; i++) {
                     addOption(cmbProject, dataList[i]);
                 }
 
@@ -136,7 +131,7 @@ var TestCaseInit = function () {
             document.querySelector("#contains").setAttribute("checked", "");
         }
         else if (result.assert_type === 2) {
-            document.querySelector("#mathches").setAttribute("checked", "");
+            document.querySelector("#equal").setAttribute("checked", "");
         }
 
         //断言的值

@@ -37,8 +37,8 @@
                             <td>{{ c.module }}</td>
                             <td>{{ c.create_time |date:"Y-m-d H:i:s"}}</td>
                             <td>
-                                <a href="/manage/module_edit/{{ m.id }}/">编辑</a>
-                                <a href="/manage/module_delete/{{ m.id }}/">删除</a>
+                                <a href="/case/edit/{{ c.id }}/">编辑</a>
+                                <a style="color: #47bac1" onclick="case_delete({{c.id}})">删除</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -76,9 +76,29 @@
         </div>
     </div>
 </div>
+
+<script src="/static/js/jquery.min.js"></script>
 <script>
+    // 添加用例
     function case_add() {
         window.location.href = "/case/add/";
+    }
+    // 删除用例
+    function case_delete(cid) {
+        let currentURL = window.location.href;
+
+        if(confirm("确定要删除吗?"))
+         {
+             $.post("/case/delete/", {
+                cid: cid
+                }, function (resp) {
+                    alert(resp.message);
+             });
+         }else{
+           return false;
+         }
+         window.location.href = currentURL;
+
     }
 </script>
 
