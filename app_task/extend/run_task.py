@@ -12,7 +12,7 @@ sys.path.append(BASE_PATH)
 print("运行测试文件：", BASE_PATH)
 
 # 定义扩展的目录
-EXTEND_DIR = BASE_PATH + "/testtask_app/extend/"
+EXTEND_DIR = BASE_PATH + "/app_task/extend/"
 
 
 @ddt

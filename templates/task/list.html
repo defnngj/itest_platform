@@ -46,7 +46,7 @@
                         <td>
                             <a href="/task/edit/{{task.id}}/">编辑</a>
                             <a href="#" onclick="delete_task('{{task.id}}')">删除</a>
-                            <a href="#" onclick="RunTask('{{task.id}}')">执行</a>
+                            <a href="#" onclick="run_task('{{task.id}}')">执行</a>
                             <a href="/testtask/result/{{task.id}}/">结果</a>
                         </td>
                     </tr>
@@ -94,11 +94,10 @@
         window.location.href = "/task/add/";
     }
     //发送方法
-    function RunTask(tid) {
+    function run_task(tid) {
         console.log("运行任务的id", tid);
 
-        $.post("/testtask/run_task/",
-            {
+        $.post("/task/run_task/", {
                 task_id: tid
             },
             function (resp) {
