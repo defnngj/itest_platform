@@ -30,18 +30,14 @@ def add_task(request):
     """
     返回创建任务页面
     """
-    return render(request, "task/add.html", {
-        "type": "add"
-    })
+    return render(request, "task/add.html")
 
 
 def edit_task(request, tid):
     """
     返回编辑任务页面
     """
-    return render(request, "task/edit.html", {
-        "type": "edit"
-    })
+    return render(request, "task/edit.html")
 
 
 def result(request, tid):
@@ -61,24 +57,20 @@ def delete_task(request, tid):
 
 def save_task(request):
     """
-    创建/编辑任务
+    创建/保存任务
     """
     if request.method == "POST":
         task_id = request.POST.get("task_id", "")
         name = request.POST.get("name", "")
         desc = request.POST.get("desc", "")
         cases = request.POST.get("cases", "")
-        print("name", name, desc)
-        print("用例", type(cases), cases)
 
         if name == "" or cases == "":
             return JsonResponse({"status": 10102, "message": "Parameter is null"})
 
         if task_id == "0":
-            print("创建")
             TestTask.objects.create(name=name, describe=desc, cases=cases)
         else:
-            print("编辑")
             task = TestTask.objects.get(id=task_id)
             task.name = name
             task.describe = desc
@@ -90,7 +82,7 @@ def save_task(request):
         return JsonResponse({"status": 10101, "message": "请求方法错误"})
 
 
-def get_case_tree(request):
+def case_node(request):
     """
     获得用例树形结构
     """
@@ -131,15 +123,18 @@ def get_case_tree(request):
 
     if request.method == "POST":
         tid = request.POST.get("tid", "")
-        print("任务的id", tid)
         if tid == "":
             return JsonResponse({"status": 10200, "message": "任务id不能为空"})
 
         task = TestTask.objects.get(id=tid)
-        casesList = json.loads(task.cases)
+        case_list = task.cases[1:-1].split(",")
+        case_list_int = []
+        for case in case_list:
+            case_list_int.append(int(case))
+
         task_data = {
-            "name": task.name,
-            "desc": task.describe
+            "taskName": task.name,
+            "taskDesc": task.describe
         }
 
         projects = Project.objects.all()
@@ -161,7 +156,7 @@ def get_case_tree(request):
                 cases = TestCase.objects.filter(module_id=module.id)
                 case_list = []
                 for case in cases:
-                    if case.id in casesList:
+                    if case.id in case_list_int:
                         case_dict = {
                             "name": case.name,
                             "isParent": False,

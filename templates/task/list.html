@@ -5,7 +5,7 @@
 <div class="card flex-fill">
     <div class="card-header">
         <h5 class="card-title mb-0" style="float:left">任务管理</h5>
-        <button onclick="add_project()" type="button" class="btn btn-primary" style="float:right">创建</button>
+        <button onclick="add_task()" type="button" class="btn btn-primary" style="float:right">创建</button>
     </div>
     <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
         <div class="row">
@@ -44,21 +44,10 @@
 
                         <td>{{ task.create_time | date:"Y-m-d H:i:s" }}</td>
                         <td>
-                            <a href="/testtask/edit_task/{{task.id}}/" style="margin-right: 8px;">
-                                <span class="glyphicon glyphicon-edit"></span>
-                            </a>
-
-                            <a href="/testtask/delete_task/{{task.id}}/" style="margin-right: 8px;">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-
-                            <a href="#" onclick="RunTask('{{task.id}}')" style="margin-right: 8px;">
-                                <span class="glyphicon glyphicon-play"></span>
-                            </a>
-
-                            <a href="/testtask/result/{{task.id}}/" style="margin-right: 8px;">
-                                <span class="glyphicon glyphicon-list-alt"></span>
-                            </a>
+                            <a href="/task/edit/{{task.id}}/">编辑</a>
+                            <a href="#" onclick="delete_task('{{task.id}}')">删除</a>
+                            <a href="#" onclick="RunTask('{{task.id}}')">执行</a>
+                            <a href="/testtask/result/{{task.id}}/">结果</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -100,7 +89,10 @@
 
 <script src="/static/js/jquery.min.js"></script>
 <script type="text/javascript">
-
+    
+    function add_task() {
+        window.location.href = "/task/add/";
+    }
     //发送方法
     function RunTask(tid) {
         console.log("运行任务的id", tid);
@@ -114,8 +106,17 @@
                     window.alert(resp.message);
                     window.location.reload();  // 刷新页面
                 }
-
             });
+    }
+
+    function delete_task(tid) {
+        console.log("666");
+        if(confirm("确定要删除吗?")){
+            window.location.href = "/task/delete/"+tid+"/";
+         }else{
+           return false;
+         }
+         window.location.href = url;
 
     }
 

@@ -1,113 +1,116 @@
-{% extends "task_list.html" %}
-{% block taskedit %}
+{% extends "manage.html" %}
+{% block manage %}
+<div class="card flex-fill">
+    <div class="card-header">
+        <h5 class="card-title mb-0" style="float:left">编辑任务</h5>
+    </div>
+    <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <div class="row">
+            <div class="col-sm-12 col-md-6"></div>
+            <div class="col-sm-12 col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="margin-left: 20px;margin-right: 20px; margin-bottom: 20px; width: 80%">
 
-<div>
-	<!--编辑任务-->
-	<h4 class="sub-header">编辑任务</h4>
+                    <div class="form-group">
+						<label for="task_name">名称：</label>
+						<input id="task_name" type="text" class="form-control">
+					</div>
 
-	<div style="margin-top: 30px;">
-		<p>名称：</p>
-		<input id="name" class="form-control"></textarea>
-	</div>
+					<div class="form-group">
+						<label for="task_desc">描述：</label>
+						<textarea id="task_desc" class="form-control" rows="3" name=textarea></textarea>
+					</div>
 
-	<div style="margin-top: 10px;">
-		<p>描述：</p>
-		<textarea id="description" class="form-control" rows="3" name=textarea></textarea>
-	</div>
+                    <div class="form-group">
+						<label for="task_desc">用例：</label>
+                        <div class="card" style="width: 50%">
+                            <div class="card-body">
+                                <ul id="treeDemo" class="ztree"></ul>
+                            </div>
+                        </div>
+                    </div>
 
-	<div style="margin-top: 10px;">
-		<p>用例：</p>
-		<ul id="treeDemo" class="ztree"></ul>
-	</div>
+                    <button type="submit" class="btn btn-primary" onclick="add_task()">保存</button>
+                </div>
 
-	<div style="float: right; margin-top: 20px;">
-		<button type="button" class="btn btn-primary" onclick="saveFun()">保存</button>
-	</div>
+            </div>
+        </div>
 
+    </div>
 </div>
 
-
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-<link href="http://cdn.bootcss.com/zTree.v3/3.5.23/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
-<script src="http://cdn.bootcss.com/zTree.v3/3.5.23/js/jquery.ztree.all.js"></script>
-<script type="text/javascript">
-
-	var zTreeObj;
-
-	// zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-	var setting = {
+<script src="https://cdn.bootcss.com/jquery/1.4.2/jquery.js"></script>
+<link href="https://cdn.bootcss.com/zTree.v3/3.5.39/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/zTree.v3/3.5.40/js/jquery.ztree.all.js"></script>
+<script type="application/javascript">
+    var zTreeObj;
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = {
 		check: {
 			enable: true,
 			chkStyle: "checkbox"
 		}
 	};
+    var zNodes;
 
+    //任务id
+	var url = window.location.href;
+	var taskId = url.split("/")[5];
 
 	$(document).ready(function () {
-		let local_url = document.location;
-		let tid = local_url.pathname.split("/")[3];
-		console.log("任务id", tid);
 
-		// 调用获取用例树
-		$.post("/testtask/get_case_tree/", {
-			"tid": tid,
-		}, function (resp) {
-			if (resp.status === 10200) {
-				document.querySelector("#name").value = resp.data.name;
-				document.querySelector("#description").value = resp.data.desc;
+        $.post("/task/case_node/", {
+            tid: taskId
+        }, function (resp) {
+            document.querySelector("#task_name").value = resp.data.taskName;
+            document.querySelector("#task_desc").value = resp.data.taskDesc;
+            zNodes = resp.data.cases;
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
 
-				var zNodes = resp.data.cases;
-				zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-				zTreeObj.expandAll(true);  //设置默认展开    
-			}
+    });
 
-		});
+    // 保存任务
+    function add_task() {
+        var taskName = $('#task_name').val();
+        var taskDesc = $('#task_desc').val();
+        console.log("task", taskName, taskDesc);
 
-	});
+        if(taskName == ""){
+            alert("任务的名称不能为空！");
+            return;
+        }
 
-	//保存用例
-	function saveFun() {
+        zTreeObj = $.fn.zTree.getZTreeObj("treeDemo");
+		var nodes = zTreeObj.getCheckedNodes(true);
 
-		let local_url = document.location;
-		let tid = local_url.pathname.split("/")[3];
-
-		//接口的基本数据
-		let name = $("#name").val();
-		let desc = $('#description').val();
-
-
-		if (name === "") {
-			window.alert("任务名称不能为空！");
-			return;
-		}
-
-		var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
-		var nodes = treeObj.getCheckedNodes(true);
-
-		var cases = new Array();
+		var cases =  new Array();
 		for (var i = 0; i < nodes.length; i++) {
-			if (nodes[i].isParent == false) {
+			if (nodes[i].isParent == false){
 				console.log("节点id:" + nodes[i].id);  //获取选中节点的值
 				cases.push(nodes[i].id);
 			}
 
 		}
 		// 将列表转为字符串
-		casesStr = JSON.stringify(cases)
+		var casesStr = JSON.stringify(cases);
 
-		$.post("/testtask/save_task/", {
-				task_id: tid,
-				name: name,
-				desc: desc,
-				cases: casesStr
+		console.log("cases", casesStr);
+
+		$.post("/task/save_task/", {
+		    task_id: taskId,
+			name: taskName,
+			desc: taskDesc,
+			cases: casesStr
 			},
 			function (resp) {
-				if (resp.status == 10200) {
-					window.alert("创建任务成功！")
+				if(resp.status == 10200){
+					window.alert("保存任务成功！")
 				}
 			});
-	};
+    }
 
 </script>
 
