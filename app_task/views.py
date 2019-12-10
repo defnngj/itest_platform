@@ -2,6 +2,7 @@ import json
 import os
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from itest_platform import settings
 from app_manage.models import Project
 from app_manage.models import Module
@@ -14,16 +15,12 @@ BASE_PATH = settings.BASE_DIR.replace("\\", "/")
 EXTEND_DIR = BASE_PATH + "/testtask_app/extend/"
 
 
-def testtask_manage(request):
+def task_manage(request):
     """
     任务管理
     """
     task_list = TestTask.objects.all()
-
-    return render(request, "task/list.html", {
-        "type": "list",
-        "tasks": task_list
-    })
+    return render(request, "task/list.html", {"tasks": task_list})
 
 
 def add_task(request):
@@ -40,10 +37,23 @@ def edit_task(request, tid):
     return render(request, "task/edit.html")
 
 
-def result(request, tid):
-    result = TestResult.objects.filter(task_id=tid).order_by('-create_time')
-    return render(request, "task/result.html",
-                  {"results": result, "type": "result"})
+def task_result(request, tid):
+    """
+    任务执行结果
+    """
+    results = TestResult.objects.filter(task_id=tid).order_by('-create_time')
+    p = Paginator(results, 5)
+    page = request.GET.get("page", "")
+    if page == "":
+        page = 1
+
+    try:
+        page_result = p.page(page)
+    except EmptyPage:
+        page_result = p.page(p.num_pages)
+    except PageNotAnInteger:
+        page_result = p.page(1)
+    return render(request, "task/result.html", {"results": page_result})
 
 
 def delete_task(request, tid):
