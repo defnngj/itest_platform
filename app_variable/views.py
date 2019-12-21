@@ -33,3 +33,20 @@ def add_variable(request):
             return response(message="保存成功")
     else:
         return response(10101, "请求方法错误")
+
+
+def delete_variable(request):
+    """
+    删除变量
+    """
+    if request.method == "POST":
+        vid = request.POST.get("vid", "")
+
+        if vid == "":
+            return response(10102, "参数不能为空！")
+
+        variable = Variable.objects.get(id=vid)
+        variable.delete()
+        return response(message="删除成功")
+    else:
+        return response(10101, "请求方法错误")

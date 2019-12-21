@@ -52,7 +52,7 @@
                             <td>{{ v.value }}</td>
                             <td>
                                 <a style="color: #47bac1" onclick="EditVariable('{{v.id}}', '{{v.key}}', '{{v.value}}')" data-toggle="modal" data-target="#myModal">编辑</a>
-                                <a style="color: #47bac1" onclick="case_delete('{{v.id}}')">删除</a>
+                                <a style="color: #47bac1" onclick="DeleteVariable('{{v.id}}')">删除</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -119,11 +119,24 @@
     }
 
     // 编辑变量
-    function EditVariable(id, key, value){
-        variableId = id;
+    function EditVariable(vid, key, value){
+        variableId = vid;
         $("#key").val(key);
         $("#value").val(value);
         console.log("v", variableId);
+    }
+
+    // 删除变量
+    function DeleteVariable(vid){
+        $.post("/variable/delete_variable/", {
+                vid: vid,
+            },
+            function (resp) {
+                if (resp.status == 10200) {
+                    window.alert(resp.message);
+                    window.location.reload();  // 刷新页面
+                }
+            });
     }
 
 </script>

@@ -5,5 +5,6 @@ urlpatterns = [
     # 任务管理
     path('', views.variable_manage),
     path('add_variable/', views.add_variable),
+    path('delete_variable/', views.delete_variable),
 
 ]
