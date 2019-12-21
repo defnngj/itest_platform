@@ -1,0 +1,83 @@
+{% extends "manage.html" %}
+{% block manage %}
+<div class="card flex-fill">
+    <div class="card-header">
+        <h5 class="card-title mb-0" style="float:left">变量列表</h5>
+        <button onclick="case_add()" type="button" class="btn btn-primary" style="float:right">创建</button>
+    </div>
+    <div id="datatables-dashboard-traffic_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <div class="row">
+            <div class="col-sm-12 col-md-6"></div>
+            <div class="col-sm-12 col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="datatables-dashboard-traffic" class="table table-striped my-0 dataTable no-footer"
+                    role="grid" aria-describedby="datatables-dashboard-traffic_info">
+                    <thead>
+                        <tr role="row">
+                            <th>Key</th>
+                            <th>value</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for v in variables %}
+                        <tr role="row" class="odd">
+                            <td>{{ v.key }}</td>
+                            <td>{{ v.value }}</td>
+                            <td>
+                                <a href="/case/edit/{{ c.id }}/">编辑</a>
+                                <a style="color: #47bac1" onclick="case_delete({{c.id}})">删除</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 翻页 -->
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="datatables-dashboard-traffic_info" role="status" aria-live="polite">
+                    <!--Showing 1 to 8 of 8 entries-->
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="datatables-dashboard-traffic_paginate">
+                    <ul class="pagination">
+                        {% if cases.has_previous %}
+                            <li class="paginate_button page-item previous"
+                                id="datatables-dashboard-traffic_previous">
+                                <a href="?page={{ cases.previous_page_number }}" aria-controls="datatables-dashboard-traffic" data-dt-idx="0" tabindex="0"
+                                    class="page-link">Previous</a>
+                            </li>
+                        {% endif %}
+                        <li class="paginate_button page-item active">
+                            <a href="#" aria-controls="datatables-dashboard-traffic" data-dt-idx="1" tabindex="0"
+                                class="page-link">{{cases.number}}</a>
+                        </li>
+
+                        {% if cases.has_next %}
+                        <li class="paginate_button page-item next" id="datatables-dashboard-traffic_next">
+                            <a href="?page={{ cases.next_page_number }}" aria-controls="datatables-dashboard-traffic" data-dt-idx="2" tabindex="0"
+                                class="page-link">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    // 添加用例
+    function case_add() {
+        window.location.href = "/case/add/";
+    }
+</script>
+
+{% endblock %}

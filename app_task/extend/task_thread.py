@@ -10,7 +10,6 @@ from xml.dom.minidom import parse
 
 BASE_PATH = settings.BASE_DIR.replace("\\", "/")
 EXTEND_DIR = BASE_PATH + "/app_task/extend/"
-print("运行文件的目录--->", EXTEND_DIR)
 
 
 class TaskThread:

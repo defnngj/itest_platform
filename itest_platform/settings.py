@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'app_manage',
     'app_case',
     'app_task',
+    'app_variable'
 ]
 
 MIDDLEWARE = [

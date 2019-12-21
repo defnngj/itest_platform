@@ -32,6 +32,10 @@ urlpatterns = [
     # 用例管理
     path('case/', include('app_case.urls')),
 
+    # 测试任务
     path('task/', include('app_task.urls')),
+
+    # 公共变量
+    path('variable/', include('app_variable.urls')),
 
 ]
