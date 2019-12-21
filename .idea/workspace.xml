@@ -2,25 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59c59a67-ca99-4741-ba79-6cf26c3eac08" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app_variable/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_variable/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/itest_platform/common.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/variable/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/itest_platform.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/itest_platform.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/bootstrap.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_task/extend/task_thread.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_task/extend/task_thread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_variable/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_variable/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_variable/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_variable/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/itest_platform/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/itest_platform/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/itest_platform/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/itest_platform/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/manage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/manage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/variable/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/variable/list.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
