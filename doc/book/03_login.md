@@ -46,4 +46,6 @@ def logout(request):
 
 * request.POST.get("username", "") 获取POST请求的参数。
 * auth.authenticate 判断用户是否存在。
-* auth.login(request, user)  保留用户的登录信息。
+* auth.login(request, user)  保留用户的登录信息。将用户session ID 写入session表
+* @login_required 装饰视图函数，当前用户没有登录，该视图函数不允许访问。
+* auth.logout(request)  删除用户的登录信息，将用户session ID 从session表删除
