@@ -119,6 +119,8 @@ USE_L10N = True
 USE_TZ = True
 
 
+SESSION_COOKIE_AGE =  3600 # 设置session失效时间 1小时，单位秒
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
