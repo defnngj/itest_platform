@@ -61,7 +61,7 @@
 
 	$(document).ready(function () {
 
-        $.post("/task/case_node/", {
+        $.post("/api/case_node/", {
             tid: taskId
         }, function (resp) {
             document.querySelector("#task_name").value = resp.data.taskName;
@@ -99,7 +99,7 @@
 
 		console.log("cases", casesStr);
 
-		$.post("/task/save_task/", {
+		$.post("/api/save_task/", {
 		    task_id: taskId,
 			name: taskName,
 			desc: taskDesc,

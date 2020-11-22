@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+	<testsuite errors="0" failures="0" file=".py" name="InterfaceTest-20201122222140" skipped="0" tests="2" time="1.991" timestamp="2020-11-22T22:21:42">
+		<testcase classname="InterfaceTest" file="api_manage\extend\run_task.py" line="21" name="test_run_cases_00001_1" time="0.496" timestamp="2020-11-22T22:21:40">
+			<!--test_run_cases_00001_1-->
+		</testcase>
+		<testcase classname="InterfaceTest" file="api_manage\extend\run_task.py" line="21" name="test_run_cases_00002_2" time="1.495" timestamp="2020-11-22T22:21:42">
+			<!--test_run_cases_00002_2-->
+		</testcase>
+	</testsuite>
+</testsuites>

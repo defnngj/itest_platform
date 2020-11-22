@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from app_manage.forms import ModuleForm
-from app_manage.models import Module
+from app_manage.models.module import Module
 
 
 def manage_module(request):

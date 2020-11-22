@@ -2,11 +2,10 @@ function getCaseInfo() {
     var url = window.location.href;
     var caseId = url.split("/")[5];
 
-    $.post("/case/get_case_info/", {
+    $.post("/api/get_case_info/", {
         cid: caseId
     }, function (resp) {
         if (resp.code == 10200) {
-
             //URL
             document.querySelector("#req_url").value = resp.data.url;
 

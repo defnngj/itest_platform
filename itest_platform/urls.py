@@ -15,27 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from app_personal import views as personal_views
+from app_manage.views import personal_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # 账户管理
-    path('', personal_views.login),
-    path('login/', personal_views.login),
-    path('logout/', personal_views.logout),
+    path('', personal_view.login),
+    path('login/', personal_view.login),
+    path('logout/', personal_view.logout),
 
-    # 项目/模块管理
+    # 页面管理
     path('manage/', include('app_manage.urls')),
 
-    # 用例管理
-    path('case/', include('app_case.urls')),
-
-    # 测试任务
-    path('task/', include('app_task.urls')),
-
-    # 公共变量
-    path('variable/', include('app_variable.urls')),
+    # api管理
+    path('api/', include('api_manage.urls')),
 
 ]

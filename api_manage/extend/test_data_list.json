@@ -1,0 +1,1 @@
+{"1": {"url": "http://httpbin.org/get", "method": "get", "header": "", "parameter_type": "from", "parameter_body": "", "assert_type": "contains", "assert_text": "http://httpbin.org/get"}, "2": {"url": "http://httpbin.org/post", "method": "post", "header": "", "parameter_type": "from", "parameter_body": "", "assert_type": "contains", "assert_text": "post"}}

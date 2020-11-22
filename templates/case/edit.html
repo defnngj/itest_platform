@@ -157,7 +157,7 @@
             return;
         }
 
-        $.get("/case/send_req/", {
+        $.get("/api/send_req/", {
             url: url,
             method: method,
             header: header_str,
@@ -183,7 +183,7 @@
             window.alert("断言的结果不能为空！");
         }
 
-        $.post("/case/assert_result/", {
+        $.post("/api/assert_result/", {
             result_text: result_text,
             assert_type: assert_type,
             assert_text: assert_text,
@@ -216,7 +216,7 @@
             return;
         }
 
-        $.post("/case/save_case/", {
+        $.post("/api/save_case/", {
             mid: module_id,
             cid: caseId,
             name: name,

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import widgets
-from app_manage.models import Project
-from app_manage.models import Module
+from app_manage.models.project import Project
+from app_manage.models.module import Module
 
 
 class ProjectForm(forms.Form):

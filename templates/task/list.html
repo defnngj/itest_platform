@@ -44,10 +44,10 @@
 
                         <td>{{ task.create_time | date:"Y-m-d H:i:s" }}</td>
                         <td>
-                            <a href="/task/edit/{{task.id}}/">编辑</a>
+                            <a href="/manage/task_edit/{{task.id}}/">编辑</a>
                             <a href="#" onclick="delete_task('{{task.id}}')">删除</a>
                             <a href="#" onclick="run_task('{{task.id}}')">执行</a>
-                            <a href="/task/result/{{task.id}}/">结果</a>
+                            <a href="/manage/task_result/{{task.id}}/">结果</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -91,32 +91,29 @@
 <script type="text/javascript">
     
     function add_task() {
-        window.location.href = "/task/add/";
+        window.location.href = "/manage/task_add/";
     }
+
     //发送方法
     function run_task(tid) {
-        console.log("运行任务的id", tid);
-
-        $.post("/task/run_task/", {
-                task_id: tid
-            },
-            function (resp) {
-                if (resp.status == 10200) {
-                    window.alert(resp.message);
-                    window.location.reload();  // 刷新页面
-                }
-            });
+        $.post("/api/run_task/", {
+            task_id: tid
+        },
+        function (resp) {
+            if (resp.status == 10200) {
+                window.alert(resp.message);
+                window.location.reload();  // 刷新页面
+            }
+        });
     }
 
     function delete_task(tid) {
-        console.log("666");
         if(confirm("确定要删除吗?")){
-            window.location.href = "/task/delete/"+tid+"/";
+            window.location.href = "/manage/task_delete/"+tid+"/";
          }else{
            return false;
          }
          window.location.href = url;
-
     }
 
 

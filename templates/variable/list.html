@@ -105,7 +105,7 @@
         let key = $("#key").val()
         let value = $("#value").val()
 
-        $.post("/variable/add_variable/", {
+        $.post("/api/add_variable/", {
                 vid: variableId,
                 key: key,
                 value: value,
@@ -128,7 +128,7 @@
 
     // 删除变量
     function DeleteVariable(vid){
-        $.post("/variable/delete_variable/", {
+        $.post("/api/delete_variable/", {
                 vid: vid,
             },
             function (resp) {
