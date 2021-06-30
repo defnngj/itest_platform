@@ -12,8 +12,8 @@
       <el-container>
         <el-aside width="160px" style="background-color: #313a46">
           <el-menu text-color="#838f9c" active-text-color="#12263f" :default-active="onRoutes">
-            <div class="klook-logo">
-              <img src="../assets/klookLogo.png" class="img-logo" />
+            <div class="redirect-logo">
+              <img src="../assets/logo.png" class="img-logo" />
             </div>
             <router-link to="/">
               <el-menu-item index="1" class="menu-option">
@@ -181,7 +181,7 @@ export default {
   height: 100%;
 }
 
-.klook-logo {
+.redirect-logo {
   background-color: #313a46;
   line-height: 60px;
   padding-bottom: 0px;

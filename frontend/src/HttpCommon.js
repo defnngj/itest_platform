@@ -16,8 +16,8 @@ function makeRequest(requestType, url, dataOrParam, responseType, additionalHead
   const header = {}
   if (process.env.NODE_ENV === 'local') {
     header['Access-Control-Allow-Origin'] = '*'
-    header['x-account-email'] = 'yuchou.zou@klook.com'
-    header['x-account-fullname'] = 'yuchou.zou'
+    header['x-account-email'] = 'test@gmail.com'
+    header['x-account-fullname'] = 'test'
   } else {
     header['Access-Control-Allow-Origin'] = '*'
   }

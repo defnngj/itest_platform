@@ -116,14 +116,18 @@ USE_L10N = True
 USE_TZ = True
 
 
-SESSION_COOKIE_AGE =  3600 # 设置session失效时间 1小时，单位秒
+SESSION_COOKIE_AGE = 3600  # 设置session失效时间 1小时，单位秒
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
-# 设置静态目录
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+if DEBUG is True:
+    # 设置静态目录
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static"),
+    ]
+
+# # 正式环境的静态资源
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")

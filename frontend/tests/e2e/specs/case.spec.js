@@ -70,7 +70,7 @@ describe('用例管理', () => {
     cy.get('[cy-data=team-list]', { timeout: 3000}).first().click()
     cy.get('[cy-data=env]').click() // 环境
     cy.get('[cy-data=env-list]', { timeout: 3000}).first().click()
-    cy.get('[cy-data=host]').type('t11.klook.io')
+    cy.get('[cy-data=host]').type('t11.redirect.io')
     cy.get('[cy-data=assertion]').clear().type('success')
     // 保存用例
     cy.get('[cy-data=save-case]').click()

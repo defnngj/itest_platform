@@ -12,7 +12,7 @@
     <el-card class="main-card">
       <div style="overflow:auto; margin-bottom: 50px;">
         <el-button type="info" size="small" class="report-button">
-          <img src='../../assets/klookLogo.png' class="img-logo" />
+          <img src='../../assets/logo.png' class="img-logo" />
         </el-button>
         <div class="span-left" style="width: 50%">
           <el-table :data="baseTable" :show-header="false">

@@ -37,7 +37,7 @@ export default {
       query: {
         current_page: 1,
         page_size: 10,
-        service_name: 'klook-kmeter/slaveserv'
+        service_name: 'redirect-kmeter/slaveserv'
       }
     }
   },

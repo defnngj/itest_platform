@@ -86,8 +86,8 @@ export default {
       heartbeat: '20000',
       query: {
         id: 2,
-        service_name: 'klook-apiconn/jrpassserv',
-        child_name: 'klook-prod-inf-1'
+        service_name: 'redirect-apiconn/jrpassserv',
+        child_name: 'redirect-prod-inf-1'
       },
       chartOption: {
         color: [],
