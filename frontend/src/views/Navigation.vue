@@ -80,7 +80,7 @@
         <el-container>
           <el-header style="text-align: right; font-size: 12px">
             <el-dropdown @command="handleCommand" trigger="click" style="margin-top: 10px;">
-              <el-avatar size="small" src="favicon.ico"></el-avatar>
+              <el-avatar size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
               <el-dropdown-menu slot="dropdown" style="width: 120px">
                 <el-dropdown-item command="help_documentation">
                   <i class="el-icon-tickets"></i>帮助文档
