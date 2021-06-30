@@ -23,7 +23,7 @@
 
                 <!--项目管理-->
                 <li class="sidebar-item" id="project">
-                    <a href="/manage/project_list/" class="sidebar-link" aria-expanded="true">
+                    <a href="/manage/project/" class="sidebar-link" aria-expanded="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -39,7 +39,7 @@
 
                 <!--模块管理-->
                 <li class="sidebar-item" id="module">
-                    <a href="/manage/module_list/" class="sidebar-link collapsed">
+                    <a href="/manage/module/" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -55,7 +55,7 @@
 
                 <!--用例管理-->
                 <li class="sidebar-item" id="case">
-                    <a href="/case/" class="sidebar-link collapsed">
+                    <a href="/manage/case/" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -73,7 +73,7 @@
 
                 <!-- 任务管理 -->
                 <li class="sidebar-item" id="task">
-                    <a href="/task/" class="sidebar-link collapsed">
+                    <a href="/manage/task/" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor"
                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -89,7 +89,7 @@
 
                 <!-- 定义变量 -->
                 <li class="sidebar-item" id="variable">
-                    <a href="/variable/" class="sidebar-link collapsed">
+                    <a href="/manage/variable/" class="sidebar-link collapsed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                              class="align-middle mr-3">
@@ -181,7 +181,6 @@
         var path = local_url.pathname.split("/")[1];
 
         if (path == "manage") {
-            console.log("aaa", path);
             var path2 = local_url.pathname.split("/")[2];
             if(path2 == "project_list"){
                 document.querySelector("#project").className += " active";

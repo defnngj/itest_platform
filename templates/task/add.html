@@ -58,7 +58,7 @@
 
     $(document).ready(function () {
 
-        $.get("/task/case_node/", {}, function (resp) {
+        $.get("/api/case_node/", {}, function (resp) {
             zNodes = resp.data;
             zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
         });
@@ -87,7 +87,7 @@
 		}
 		// 将列表转为字符串
 		var casesStr = JSON.stringify(cases);
-		$.post("/task/save_task/", {
+		$.post("/api/save_task/", {
 		    task_id: 0,
 			name: taskName,
 			desc: taskDesc,

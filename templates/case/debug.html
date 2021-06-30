@@ -163,7 +163,7 @@
             return;
         }
 
-        $.get("/case/send_req/", {
+        $.get("/api/send_req/", {
                 url: url,
                 method: method,
                 header: header_str,
@@ -190,7 +190,7 @@
             window.alert("要断言的文本不能为空");
             return;
         }
-        $.post("/case/assert_result/", {
+        $.post("/api/assert_result/", {
             result_text: result_text,
             assert_type: assert_type,
             assert_text: assert_text,
@@ -235,7 +235,7 @@
             return;
         }
 
-        $.post("/case/save_case/", {
+        $.post("/api/save_case/", {
             url: url,
             method: method,
             header: header,

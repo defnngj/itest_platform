@@ -43,8 +43,8 @@ var SelectInit = function (defaultProjectId, defaultModuleId) {
 
     function getSelectData() {
         // 调用获取select数据列表
-        $.get("/case/get_select_data/", {}, function (resp) {
-            if (resp.status === 10200) {
+        $.get("/api/get_select_data/", {}, function (resp) {
+            if (resp.status == 10200) {
                 dataList = resp.data;
                 //遍历项目
                 for (let i = 0; i < dataList.length; i++) {
@@ -90,12 +90,11 @@ var TestCaseInit = function () {
     var url = document.location;
     var cid =  url.pathname.split("/")[3];
 
-    $.post("/testcase/get_case_info",
+    $.post("/api/get_case_info/",
     {
         cid: cid
     },
     function (resp, status) {
-        console.log("返回的结果", resp.data);
         var result = resp.data;
 
         //请求URL
