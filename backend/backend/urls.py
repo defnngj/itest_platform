@@ -22,5 +22,5 @@ urlpatterns = [
     path('test/', TestView().as_view()),
     path('api-auth/', include('rest_framework.urls')),
     path('api/personal/', include('personal_app.urls')),
-    # path('api/project/', include('project_app.urls')),
+    path('api/project/', include('project_app.urls')),
 ]

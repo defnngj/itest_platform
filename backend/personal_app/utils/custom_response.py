@@ -10,6 +10,8 @@ class Error(Enum):
     USER_OR_PAWD_NULL = {'10010': '用户名密码为空'}
     USER_OR_PAWD_ERROR = {'10011': '用户名密码错误'}
 
+    PROJECT_ID_NULL = {"10020", "项目id不存在"}
+
 
 def response(success: bool = True, error: Error = {}, data: any = []) -> Response:
     """
