@@ -1,5 +1,5 @@
 from django.urls import path
-from personal_app.views import LoginView, UserView, GroupView
+from common_app.views import LoginView, UserView, GroupView
 
 urlpatterns = [
     path('v1/login/', LoginView.as_view()),

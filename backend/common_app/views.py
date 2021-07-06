@@ -3,8 +3,8 @@ from django.contrib import auth
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from personal_app.utils import response, Error
-from personal_app.serializers import UserSerializer, GroupSerializer
+from common_app.utils import response, Error
+from common_app.serializers import UserSerializer, GroupSerializer
 
 
 class TestView(APIView):

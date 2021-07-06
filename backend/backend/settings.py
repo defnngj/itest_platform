@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
     'rest_framework',
-    'personal_app',
-    'project_app',
+    'common_app',
+    'interface_app',
 ]
 
 MIDDLEWARE = [
@@ -141,7 +141,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
-        'personal_app.utils.TokenAuthentication'  # 自定义全局认证
+        'common_app.utils.TokenAuthentication'  # 自定义全局认证
     ],
 }
 

@@ -1,9 +1,10 @@
 import json
-from project_app.models import Project, Module
-from rest_framework.views import APIView
-from personal_app.utils import response, Error
 from django.forms.models import model_to_dict
 from django.core import serializers
+from rest_framework.views import APIView
+from common_app.utils import response, Error
+from common_app.utils import Pagination
+from interface_app.models import Project
 
 
 class ProjectView(APIView):
@@ -18,7 +19,7 @@ class ProjectView(APIView):
             project = Project.objects.get(id=pk)
             project_dict = model_to_dict(project)
         except Project.DoesNotExist:
-            return response(Error.PROJECT_ID_NULL)
+            return response(error=Error.PROJECT_ID_NULL)
         return response(data=project_dict)
 
     def post(self, request, pk):
@@ -72,6 +73,8 @@ class ProjectsView(APIView):
         """
         print("/projects/")
         projects = Project.objects.all()
-        data = serializers.serialize('json', projects)
+        pg = Pagination()
+        page_project = pg.paginate_queryset(queryset=projects, request=request, view=self)
+        data = serializers.serialize('json', page_project)
         return response(data=json.loads(data))
 
