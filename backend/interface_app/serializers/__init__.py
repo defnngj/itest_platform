@@ -1,2 +1,2 @@
-from .project_serializers import ProjectSerializer
-from .module_serializers import ModuleSerializer
+from .project_serializers import *
+from .module_serializers import *

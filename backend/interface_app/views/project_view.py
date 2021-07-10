@@ -2,9 +2,10 @@ import json
 from django.forms.models import model_to_dict
 from django.core import serializers
 from rest_framework.views import APIView
-from common_app.utils import response, Error
+from common_app.utils import response, response_fail, Error
 from common_app.utils import Pagination
 from interface_app.models import Project
+from interface_app.serializers import ProjectValidators
 
 
 class ProjectView(APIView):
@@ -28,6 +29,9 @@ class ProjectView(APIView):
         """
         print("/project/{}/".format(pk))
         print(type(request.data), request.data)
+        val = ProjectValidators(data=request.data)
+        if val.is_valid() is False:
+            return response_fail(val.errors)
         name = request.data.get('name', "")
         describe = request.data.get('describe', "")
         status = request.data.get('status', True)
@@ -39,14 +43,16 @@ class ProjectView(APIView):
         """
         更新一个项目
         """
-        name = request.data.get('name', "")
-        describe = request.data.get('describe', "")
-        status = request.data.get('status', True)
+        print("/project/{}/".format(pk))
+        val = ProjectValidators(data=request.data)
+        if val.is_valid() is False:
+            return response_fail(val.errors)
+
         try:
             project = Project.objects.get(id=pk)
-            project.name = name
-            project.describe = describe
-            project.status = status
+            project.name = request.data.get('name')
+            project.describe = request.data.get('describe', "")
+            project.status = request.data.get('status', True)
             project.save()
         except Project.DoesNotExist:
             return response(error=Error.PROJECT_ID_NULL)
@@ -56,6 +62,7 @@ class ProjectView(APIView):
         """
         删除项目
         """
+        print("/project/{}/".format(pk))
         try:
             project = Project.objects.get(id=pk)
             project.delete()

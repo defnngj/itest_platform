@@ -1,20 +1,28 @@
-from enum import Enum, unique
 from rest_framework.response import Response
 
 
-@unique
-class Error(Enum):
+class Error:
     """
-    子定义错误码 与 错误信息
+    子定义错误码与错误信息
     """
-    USER_OR_PAWD_NULL = {'10010': '用户名密码为空'}
-    USER_OR_PAWD_ERROR = {'10011': '用户名密码错误'}
+    USER_OR_PAWD_NULL = {"10010": "用户名密码为空"}
+    USER_OR_PAWD_ERROR = {"10011": "用户名密码错误"}
 
-    PROJECT_ID_NULL = {"10020", "项目id不存在"}
-    MODULE_ID_NULL = {"10030", "模块id不存在"}
+    PROJECT_ID_NULL = {"10020": "项目id不存在"}
+    MODULE_ID_NULL = {"10030": "模块id不存在"}
 
 
-def response(success: bool = True, error: Error = {}, data: any = []) -> Response:
+def response_fail(error=""):
+    """
+    返回失败, 主要用于参数验证失败
+    """
+    error_msg = {
+        "20010": str(error)
+    }
+    return response(success=False, error=error_msg, data=[])
+
+
+def response(success: bool = True, error={}, data: any = []) -> Response:
     """
     自定义接口返回格式
     """
@@ -22,6 +30,7 @@ def response(success: bool = True, error: Error = {}, data: any = []) -> Respons
         error_code = ""
         error_msg = ""
     else:
+        success = False
         error_code = list(error.keys())[0]
         error_msg = list(error.values())[0]
 
