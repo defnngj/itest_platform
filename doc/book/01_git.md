@@ -45,7 +45,28 @@
 
 ```
 
+__分支&冲突合并__
+
+|  main分支   | dev分支  | test分支  |
+|  ----  | ----  |----  |
+| 分布分支  | A开发分支 | B开发分支  |
+
+main: <--dev <--冲突--test  ok
+main: <--test <--冲突--dev
+
+main <<=== dev: <--冲突-- test 
+main <<=== test: <--冲突-- dev
+
+test <--冲突-- main
+dev <--冲突-- main
+
 ### 客户端
 
 github for desktop：
 https://desktop.github.com/
+
+
+
+### git/github 教程
+
+http://class.itest.info/git
