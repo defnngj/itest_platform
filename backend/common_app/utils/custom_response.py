@@ -17,7 +17,7 @@ def response_fail(error=""):
     返回失败, 主要用于参数验证失败
     """
     error_msg = {
-        "20010": str(error)
+        "30010": str(error)
     }
     return response(success=False, error=error_msg, data=[])
 

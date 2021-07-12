@@ -10,23 +10,31 @@ from interface_app.serializers import ModuleSerializer, ModuleValidators
 class ModuleView(APIView):
     authentication_classes = []
 
-    def get(self, request, pk):
+    def get(self, request, *args, **kwargs):
         """
         获得一个模块信息
         """
-        print("/module/{}/".format(pk))
-        try:
-            module = Module.objects.get(id=pk)
-            module_dict = model_to_dict(module)
-        except Module.DoesNotExist:
-            return response(error=Error.PROJECT_ID_NULL)
-        return response(data=module_dict)
+        print("/module/{}/".format(kwargs.get("pk")))
+        pk = kwargs.get("pk")
+        if pk is None:
+            modules = Module.objects.all()
+            pg = Pagination()
+            page_module = pg.paginate_queryset(queryset=modules, request=request, view=self)
+            ser = ModuleSerializer(instance=page_module, many=True)
+            return response(data=ser.data)
+        else:
+            try:
+                module = Module.objects.get(id=pk)
+                module_dict = model_to_dict(module)
+            except Module.DoesNotExist:
+                return response(error=Error.PROJECT_ID_NULL)
+            return response(data=module_dict)
 
-    def post(self, request, pk):
+    def post(self, request, *args, **kwargs):
         """
         添加一个模块
         """
-        print("/module/{}/".format(pk))
+        print("/module/{}/".format(kwargs))
         val = ModuleValidators(data=request.data)
         if val.is_valid() is False:
             return response_fail(val.errors)
@@ -69,16 +77,16 @@ class ModuleView(APIView):
         return response()
 
 
-class ModulesView(ListAPIView):
-    authentication_classes = []
-
-    def list(self, request, *args, **kwargs):
-        queryset = Module.objects.all()
-
-        pg = Pagination()
-        page_module = pg.paginate_queryset(queryset=queryset, request=request, view=self)
-        ser = ModuleSerializer(instance=page_module, many=True)
-        return response(data=ser.data)
+# class ModulesView(ListAPIView):
+#     authentication_classes = []
+#
+#     def list(self, request, *args, **kwargs):
+#         queryset = Module.objects.all()
+#
+#         pg = Pagination()
+#         page_module = pg.paginate_queryset(queryset=queryset, request=request, view=self)
+#         ser = ModuleSerializer(instance=page_module, many=True)
+#         return response(data=ser.data)
 
 
 # class ModulesView(APIView):

@@ -5,7 +5,7 @@ from interface_app.models import Project
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = "__all__"
+        fields = ["id", "name", "describe", "status"]
 
 
 class ProjectValidators(serializers.Serializer):
