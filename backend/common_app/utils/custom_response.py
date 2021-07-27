@@ -9,6 +9,7 @@ class Error:
     USER_OR_PAWD_ERROR = {"10011": "用户名密码错误"}
 
     PROJECT_ID_NULL = {"10020": "项目id不存在"}
+    PROJECT_OBJECT_NULL = {"10021": "通过id查询项目不存在"}
     MODULE_ID_NULL = {"10030": "模块id不存在"}
     CASE_ID_NULL = {"10040": "用例id不存在"}
 

@@ -5,7 +5,16 @@ from rest_framework.views import APIView
 from common_app.utils import response, response_fail, Error
 from common_app.utils import Pagination
 from interface_app.models import Project
-from interface_app.serializers import ProjectValidators
+from interface_app.serializers import ProjectQuerySerializer, ProjectSaveSerializer
+
+
+"""
+{
+    "name":"研发协作平台",
+    "describe": "公司研发团队使用",
+    "status": true
+}
+"""
 
 
 class ProjectView(APIView):
@@ -37,43 +46,43 @@ class ProjectView(APIView):
         """
         print("/project/{}/".format(kwargs.get("pk")))
         print(type(request.data), request.data)
-        val = ProjectValidators(data=request.data)
-        if val.is_valid() is False:
+        val = ProjectSaveSerializer(data=request.data)
+        if val.is_valid():
+            val.save()
+        else:
             return response_fail(val.errors)
-        name = request.data.get('name', "")
-        describe = request.data.get('describe', "")
-        status = request.data.get('status', True)
-        project = Project.objects.create(name=name, describe=describe, status=status)
-        project_dict = model_to_dict(project)
-        return response(data=project_dict)
+        return response(data=val.data)
 
-    def put(self, request, pk):
+    def put(self, request, *args, **kwargs):
         """
         更新一个项目
         """
-        print("/project/{}/".format(pk))
-        val = ProjectValidators(data=request.data)
-        if val.is_valid() is False:
-            return response_fail(val.errors)
-
+        pk = kwargs.get("pk")
+        if pk is None:
+            return response(error=Error.PROJECT_ID_NULL)
         try:
             project = Project.objects.get(id=pk)
-            project.name = request.data.get('name')
-            project.describe = request.data.get('describe', "")
-            project.status = request.data.get('status', True)
-            project.save()
         except Project.DoesNotExist:
-            return response(error=Error.PROJECT_ID_NULL)
-        return response()
+            return response(error=Error.PROJECT_OBJECT_NULL)
+        val = ProjectSaveSerializer(instance=project, data=request.data)
+        if val.is_valid():
+            val.save()
+        else:
+            return response_fail(val.errors)
 
-    def delete(self, request, pk):
+        return response(data=val.data)
+
+    def delete(self, request, *args, **kwargs):
         """
         删除项目
         """
-        print("/project/{}/".format(pk))
+        pk = kwargs.get("pk")
+        if pk is None:
+            return response(error=Error.PROJECT_ID_NULL)
         try:
             project = Project.objects.get(id=pk)
-            project.delete()
         except Project.DoesNotExist:
-            return response(error=Error.PROJECT_ID_NULL)
+            return response(error=Error.PROJECT_OBJECT_NULL)
+        else:
+            project.delete()
         return response()
