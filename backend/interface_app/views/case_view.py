@@ -4,11 +4,21 @@ from common_app.utils import response, Error, response_fail
 from django.forms.models import model_to_dict
 from common_app.utils import Pagination
 from interface_app.models import Project, Module, TestCase
-from interface_app.serializers import CaseValidators
+from interface_app.serializers import CaseValidators, CaseSerializer
 
 
 class CaseView(APIView):
     authentication_classes = []
+
+    def get(self, request, *args, **kwargs):
+        """
+        获得用例数据
+        """
+        modules = Module.objects.all()
+        pg = Pagination()
+        page_module = pg.paginate_queryset(queryset=modules, request=request, view=self)
+        ser = CaseSerializer(instance=page_module, many=True)
+        return response(data=ser.get_local_data())
 
     def post(self, request, *args, **kwargs):
         """
