@@ -1,18 +1,16 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import serializers
+from common_app.utils import BaseModelSerializer
 
 
-class GroupSerializer(serializers.ModelSerializer):
+class GroupSerializer(BaseModelSerializer):
     class Meta:
         model = Group
         fields = ['name']
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(BaseModelSerializer):
     # groups = GroupSerializer()
 
     class Meta:
         model = User
         fields = ['username', 'email']
-
-
