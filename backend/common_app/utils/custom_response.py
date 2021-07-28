@@ -12,6 +12,7 @@ class Error:
     PROJECT_OBJECT_NULL = {"10021": "通过id查询项目不存在"}
     MODULE_ID_NULL = {"10030": "模块id不存在"}
     CASE_ID_NULL = {"10040": "用例id不存在"}
+    CASE_OBJECT_NULL = {"10041": "通过id查询用例不存在"}
 
 
 def response_fail(error=""):

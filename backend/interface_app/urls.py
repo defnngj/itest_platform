@@ -10,5 +10,6 @@ urlpatterns = [
     path('v1/module/<int:pk>/', ModuleView.as_view()),
     path('v1/module/', ModuleView.as_view()),
 
-    path('v1/case/', CaseView.as_view())
+    path('v1/case/', CaseView.as_view()),
+    path('v1/case/<int:pk>/', CaseView.as_view())
 ]

@@ -12,23 +12,28 @@ class ModuleView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
-        获得一个模块信息
+        模块查询
         """
-        print("/module/{}/".format(kwargs.get("pk")))
         pk = kwargs.get("pk")
-        if pk is None:
-            modules = Module.objects.all()
-            pg = Pagination()
-            page_module = pg.paginate_queryset(queryset=modules, request=request, view=self)
-            ser = ModuleSerializer(instance=page_module, many=True)
-            return response(data=ser.data)
-        else:
+        if pk is not None:
+            print("/module/1/")
             try:
                 module = Module.objects.get(id=pk)
                 module_dict = model_to_dict(module)
             except Module.DoesNotExist:
                 return response(error=Error.PROJECT_ID_NULL)
             return response(data=module_dict)
+        else:
+            print("/module/?page=1&size=10")
+            modules = Module.objects.all()
+            pg = Pagination()
+            page_module = pg.paginate_queryset(queryset=modules, request=request, view=self)
+            ser = ModuleSerializer(instance=page_module, many=True)
+            data = {
+                "total": modules.count(),
+                "moduleList": ser.data,
+            }
+            return response(data=data)
 
     def post(self, request, *args, **kwargs):
         """

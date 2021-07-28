@@ -14,17 +14,31 @@ class CaseView(APIView):
         """
         获得用例数据
         """
-        modules = Module.objects.all()
-        pg = Pagination()
-        page_module = pg.paginate_queryset(queryset=modules, request=request, view=self)
-        ser = CaseSerializer(instance=page_module, many=True)
-        return response(data=ser.get_local_data())
+        pk = kwargs.get("pk")
+        if pk is not None:
+            print("/case/1/")
+            try:
+                case = TestCase.objects.get(id=pk)
+                ser = CaseSerializer(instance=case, many=False)
+            except TestCase.DoesNotExist:
+                return response(error=Error.PROJECT_ID_NULL)
+            return response(data=ser.data)
+        else:
+            print("/case/?page=1&size=10")
+            test_case = TestCase.objects.all()
+            pg = Pagination()
+            page_module = pg.paginate_queryset(queryset=test_case, request=request, view=self)
+            ser = CaseSerializer(instance=page_module, many=True)
+            data = {
+                "total": test_case.count(),
+                "caseList": ser.data
+            }
+            return response(data=data)
 
     def post(self, request, *args, **kwargs):
         """
         添加一条用例
         """
-        print("/case/ POST".format(kwargs))
         val = CaseValidators(data=request.data)
         if val.is_valid():
             val.save()
@@ -37,7 +51,6 @@ class CaseView(APIView):
         """
         更新一条用例
         """
-        print("/case/ POST".format(kwargs))
         cid = request.data.get("id")
         if cid is None:
             return response(error=Error.CASE_ID_NULL)
@@ -49,3 +62,17 @@ class CaseView(APIView):
             return response_fail(val.errors)
 
         return response(data=val.data)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        删除用例
+        """
+        pk = kwargs.get("pk")
+        if pk is None:
+            return response(error=Error.CASE_ID_NULL)
+        try:
+            case = TestCase.objects.get(id=pk)
+            case.delete()
+        except TestCase.DoesNotExist:
+            return response(error=Error.CASE_OBJECT_NULL)
+        return response()

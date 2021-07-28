@@ -10,14 +10,13 @@ class CaseData:
 class CaseSerializer(BaseModelSerializer):
     class Meta:
         model = TestCase
-        fields = ["url", "method", 'header', "parameter_type", "parameter_body", "result_text",
+        fields = ["url", "method", 'header', "parameter_type", "parameter_body", "result",
                   "assert_type", "assert_text", "module_id", "name"]
         ordering = ["id"]
 
     field_mappings = (
         ("parameter_type", "parameterType"),
         ("parameter_body", "parameterBody"),
-        ("result_text", "resultText"),
         ("assert_type", "assertType"),
         ("assert_text", "assertText"),
         ("module_id", "moduleId"),
@@ -30,7 +29,7 @@ class CaseValidators(BaseSerializer):
     header = serializers.CharField(required=False)
     parameter_type = serializers.CharField(required=True, error_messages={'required': 'method不能为空'})
     parameter_body = serializers.CharField(required=True, error_messages={'required': 'parameter_body请填写名字'})
-    result_text = serializers.CharField(required=False)
+    result = serializers.CharField(required=False)
     assert_type = serializers.CharField(required=True, error_messages={'required': 'assert_type必须填写'})
     assert_text = serializers.CharField(required=True, error_messages={'required': 'assert_text必须填写'})
     module_id = serializers.IntegerField(required=True, error_messages={'required': 'module_id必须填写'})
