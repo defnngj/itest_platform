@@ -21,11 +21,11 @@ class TestResult(models.Model):
     """
     name = models.CharField("名称", max_length=100, blank=False, default="")
     task = models.ForeignKey(TestTask, on_delete=models.CASCADE)
-    error = models.IntegerField("错误用例")
-    failure = models.IntegerField("失败用例")
-    skipped = models.IntegerField("跳过用例")
-    tests = models.IntegerField("总用例数")
-    run_time = models.FloatField("运行时长")
+    error = models.IntegerField("错误用例", default=0)
+    failure = models.IntegerField("失败用例", default=0)
+    skipped = models.IntegerField("跳过用例", default=0)
+    tests = models.IntegerField("总用例数", default=0)
+    run_time = models.FloatField("运行时长", default=0)
     result = models.TextField("详细", default="")
     create_time = models.DateTimeField("创建时间", auto_now_add=True)
 
