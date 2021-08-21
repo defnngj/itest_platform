@@ -1,16 +1,19 @@
 from rest_framework import serializers
 from interface_app.models import TestCase
 from common_app.utils import BaseModelSerializer, BaseSerializer
+from rest_framework.validators import UniqueTogetherValidator
 
 
 class CaseData:
     methods = ["POST", "GET", "DELETE", "PUT"]
+    params_type = ["params", "data", "json"]
+    assert_type = ["include", "equal"]
 
 
 class CaseSerializer(BaseModelSerializer):
     class Meta:
         model = TestCase
-        fields = ["url", "method", 'header', "parameter_type", "parameter_body", "result",
+        fields = ["url", "method", 'header', "params_type", "params_body", "result",
                   "assert_type", "assert_text", "module_id", "name"]
         ordering = ["id"]
 
@@ -23,17 +26,22 @@ class CaseSerializer(BaseModelSerializer):
     )
 
 
-class CaseValidators(BaseSerializer):
-    url = serializers.CharField(required=True, error_messages={'required': 'URL不能为空'})
-    method = serializers.IntegerField(required=True, error_messages={'required': 'method不能为空'})
-    header = serializers.CharField(required=False)
-    parameter_type = serializers.CharField(required=True, error_messages={'required': 'method不能为空'})
-    parameter_body = serializers.CharField(required=True, error_messages={'required': 'parameter_body请填写名字'})
-    result = serializers.CharField(required=False)
-    assert_type = serializers.CharField(required=True, error_messages={'required': 'assert_type必须填写'})
-    assert_text = serializers.CharField(required=True, error_messages={'required': 'assert_text必须填写'})
-    module_id = serializers.IntegerField(required=True, error_messages={'required': 'module_id必须填写'})
+class CaseValidators(serializers.Serializer):
     name = serializers.CharField(required=True, error_messages={'required': 'name必须填写'})
+    url = serializers.CharField(required=True,
+                                error_messages={'required': 'URL不能为空'})
+    method = serializers.ChoiceField(required=True,
+                                     choices=CaseData.methods,
+                                     error_messages={'required': 'method不能为空'})
+    header = serializers.CharField(required=False)
+    params_type = serializers.ChoiceField(required=True,
+                                          choices=CaseData.params_type,
+                                          error_messages={'required': 'params_type不能为空'})
+    params_body = serializers.CharField(required=False)
+    result = serializers.CharField(required=False)
+    assert_type = serializers.ChoiceField(required=False, choices=CaseData.assert_type)
+    assert_text = serializers.CharField(required=False)
+    module_id = serializers.IntegerField(required=True, error_messages={'required': 'module_id必须填写'})
 
     def create(self, validated_data):
         """
