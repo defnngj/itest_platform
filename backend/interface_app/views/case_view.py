@@ -79,15 +79,15 @@ class CaseViewSet(ViewSet):
     def delete_case(self, request, *args, **kwargs):
         """
         删除用例
-        /api/interface/v1/case/<pk>/info/
+        /api/interface/v1/case/<pk>/delete/
         """
         pk = kwargs.get("pk")
         if pk is None:
             return response(error=Error.CASE_ID_NULL)
-        try:
-            TestCase.objects.get(id=pk, is_delete=False).update(is_delete=True)
-        except TestCase.DoesNotExist:
+        case = TestCase.objects.filter(id=pk, is_delete=False).update(is_delete=True)
+        if case == 0:
             return response(error=Error.CASE_OBJECT_NULL)
+
         return response()
 
 

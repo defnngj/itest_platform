@@ -79,8 +79,8 @@ class ProjectView(APIView):
         pk = kwargs.get("pk")
         if pk is None:
             return response(error=Error.PROJECT_ID_NULL)
-        try:
-            Project.objects.get(id=pk, is_delete=False).update(is_delete=True)
-        except Project.DoesNotExist:
+        project = Project.objects.filter(id=pk, is_delete=False).update(is_delete=True)
+        if project == 0:
             return response(error=Error.PROJECT_OBJECT_NULL)
+
         return response()

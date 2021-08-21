@@ -70,14 +70,17 @@ class ModuleView(APIView):
             return response(error=Error.MODULE_ID_NULL)
         return response()
 
-    def delete(self, request, pk):
+    def delete(self, request, *args, **kwargs):
         """
         删除项目
         """
-        try:
-            Module.objects.get(id=pk, is_delete=False).update(is_delete=True)
-        except Module.DoesNotExist:
-            return response(error=Error.MODULE_ID_NULL)
+        pk = kwargs.get("pk")
+        if pk is None:
+            return response(error=Error.PROJECT_ID_NULL)
+        module = Module.objects.filter(id=pk, is_delete=False).update(is_delete=True)
+        if module == 0:
+            return response(error=Error.MODULE_OBJECT_NULL)
+
         return response()
 
 
