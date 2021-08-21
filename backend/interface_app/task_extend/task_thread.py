@@ -8,8 +8,8 @@ from interface_app.models.task import TestResult
 from backend import settings
 from xml.dom.minidom import parse
 
-BASE_PATH = settings.BASE_DIR.replace("\\", "/")
-EXTEND_DIR = BASE_PATH + "/api_manage/extend/"
+BASE_PATH = settings.BASE_DIR
+EXTEND_DIR = os.path.join(BASE_PATH, "api_manage", "extend")
 
 
 class TaskThread:

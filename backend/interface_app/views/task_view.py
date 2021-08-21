@@ -1,6 +1,12 @@
-import json
 import os
 from django.http import JsonResponse, HttpResponseRedirect
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet, ViewSet
+from rest_framework.decorators import action
+from common_app.utils import response, Error, response_fail
+from interface_app.serializers import TaskSerializer, TaskValidators
+from common_app.utils import Pagination
+
 from backend import settings
 from interface_app.models.project import Project
 from interface_app.models.module import Module
@@ -9,35 +15,89 @@ from interface_app.models.task import TestTask
 from interface_app.models.task import TestResult
 from interface_app.task_extend.task_thread import TaskThread
 
-BASE_PATH = settings.BASE_DIR.replace("\\", "/")
+BASE_PATH = settings.BASE_DIR
 EXTEND_DIR = os.path.join(BASE_PATH, "interface_app", "task_extend")
 
 
-def save_task(request):
-    """
-    创建/保存任务
-    """
-    if request.method == "POST":
-        task_id = request.POST.get("task_id", "")
-        name = request.POST.get("name", "")
-        desc = request.POST.get("desc", "")
-        cases = request.POST.get("cases", "")
+class TaskViewSet(ViewSet):
+    queryset = TestTask.objects.all()
+    serializer_class = TaskSerializer
+    authentication_classes = []
 
-        if name == "" or cases == "":
-            return JsonResponse({"status": 10102, "message": "Parameter is null"})
-
-        if task_id == "0":
-            TestTask.objects.create(name=name, describe=desc, cases=cases)
+    @action(methods=["post"], detail=False, url_path='create')
+    def create_task(self, request, *args, **kwargs):
+        """
+        创建任务
+        """
+        val = TaskValidators(data=request.data)
+        if val.is_valid():
+            val.save()
         else:
-            task = TestTask.objects.get(id=task_id)
-            task.name = name
-            task.describe = desc
-            task.cases = cases
-            task.save()
+            return response_fail(val.errors)
+        return response()
 
-        return JsonResponse({"status": 10200, "message": "success"})
-    else:
-        return JsonResponse({"status": 10101, "message": "请求方法错误"})
+    @action(methods=["put"], detail=False, url_path='update')
+    def update_task(self, request, *args, **kwargs):
+        """
+        创建任务
+        """
+        cid = request.data.get("id")
+        if cid is None:
+            return response(error=Error.CASE_ID_NULL)
+        task = TestTask.objects.get(pk=cid, is_delete=False)
+        val = TaskValidators(instance=task, data=request.data)
+        if val.is_valid():
+            val.save()
+        else:
+            return response_fail(val.errors)
+        return response()
+
+    @action(methods=["delete"], detail=True, url_path='delete')
+    def delete_task(self, request, *args, **kwargs):
+        """
+        删除用例
+        /api/interface/v1/task/<pk>/delete/
+        """
+        pk = kwargs.get("pk")
+        if pk is None:
+            return response(error=Error.CASE_ID_NULL)
+
+        task = TestTask.objects.filter(id=pk, is_delete=False).update(is_delete=True)
+        if task == 0:
+            return response(error=Error.CASE_OBJECT_NULL)
+
+        return response()
+
+    @action(methods=["get"], detail=False, url_path='list')
+    def get_task_list(self, request, *args, **kwargs):
+        """
+        获得用例数据
+        /api/interface/v1/task/list/
+        """
+        test_case = TestTask.objects.filter(is_delete=False).all()
+        pg = Pagination()
+        page_module = pg.paginate_queryset(queryset=test_case, request=request, view=self)
+        ser = TaskSerializer(instance=page_module, many=True)
+        data = {
+            "total": test_case.count(),
+            "caseList": ser.data
+        }
+        return response(data=data)
+
+    @action(methods=["get"], detail=True, url_path='info')
+    def get_task(self, request, *args, **kwargs):
+        """
+        获得用例数据
+        /api/interface/v1/task/<pk>/info/
+        """
+        pk = kwargs.get("pk")
+        if pk is not None:
+            try:
+                task = TestTask.objects.get(id=pk, is_delete=False)
+                ser = TaskSerializer(instance=task, many=False)
+            except TestTask.DoesNotExist:
+                return response(error=Error.CASE_ID_NULL)
+            return response(data=ser.data)
 
 
 def case_node(request):
