@@ -18,14 +18,14 @@ class ModuleView(APIView):
         if pk is not None:
             print("/module/1/")
             try:
-                module = Module.objects.get(id=pk)
+                module = Module.objects.get(id=pk, is_delete=False)
                 module_dict = model_to_dict(module)
             except Module.DoesNotExist:
                 return response(error=Error.PROJECT_ID_NULL)
             return response(data=module_dict)
         else:
             print("/module/?page=1&size=10")
-            modules = Module.objects.all()
+            modules = Module.objects.filter(is_delete=False).all()
             pg = Pagination()
             page_module = pg.paginate_queryset(queryset=modules, request=request, view=self)
             ser = ModuleSerializer(instance=page_module, many=True)
@@ -60,7 +60,7 @@ class ModuleView(APIView):
             return response_fail(val.errors)
 
         try:
-            module = Module.objects.get(id=pk)
+            module = Module.objects.get(id=pk, is_delete=False)
             module.name = request.data.get('name')
             module.describe = request.data.get('describe')
             module.project_id = request.data.get('projectId')
@@ -75,8 +75,7 @@ class ModuleView(APIView):
         删除项目
         """
         try:
-            module = Module.objects.get(id=pk)
-            module.delete()
+            Module.objects.get(id=pk, is_delete=False).update(is_delete=True)
         except Module.DoesNotExist:
             return response(error=Error.MODULE_ID_NULL)
         return response()

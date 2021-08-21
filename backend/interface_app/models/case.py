@@ -16,6 +16,7 @@ class TestCase(models.Model):
     result = models.TextField("结果", null=True, default="{}")
     assert_type = models.CharField("断言类型", max_length=10, null=True)  # include/ equal
     assert_text = models.TextField("结果", null=True, default="{}")
+    is_delete = models.BooleanField("状态", default=False)
     create_time = models.DateTimeField("创建时间", auto_now_add=True)
     update_time = models.DateTimeField("更新时间", auto_now=True)
 

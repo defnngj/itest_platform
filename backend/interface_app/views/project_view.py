@@ -27,14 +27,14 @@ class ProjectView(APIView):
         print("/project/{}/".format(kwargs.get("pk")))
         pk = kwargs.get("pk")
         if pk is None:
-            projects = Project.objects.all()
+            projects = Project.objects.filter(is_delete=False).all()
             pg = Pagination()
             page_project = pg.paginate_queryset(queryset=projects, request=request, view=self)
             data = serializers.serialize('json', page_project)
             return response(data=json.loads(data))
         else:
             try:
-                project = Project.objects.get(id=pk)
+                project = Project.objects.get(id=pk, is_delete=False)
                 project_dict = model_to_dict(project)
             except Project.DoesNotExist:
                 return response(error=Error.PROJECT_ID_NULL)
@@ -61,7 +61,7 @@ class ProjectView(APIView):
         if pk is None:
             return response(error=Error.PROJECT_ID_NULL)
         try:
-            project = Project.objects.get(id=pk)
+            project = Project.objects.get(id=pk, is_delete=False)
         except Project.DoesNotExist:
             return response(error=Error.PROJECT_OBJECT_NULL)
         val = ProjectSaveSerializer(instance=project, data=request.data)
@@ -80,9 +80,7 @@ class ProjectView(APIView):
         if pk is None:
             return response(error=Error.PROJECT_ID_NULL)
         try:
-            project = Project.objects.get(id=pk)
+            Project.objects.get(id=pk, is_delete=False).update(is_delete=True)
         except Project.DoesNotExist:
             return response(error=Error.PROJECT_OBJECT_NULL)
-        else:
-            project.delete()
         return response()
