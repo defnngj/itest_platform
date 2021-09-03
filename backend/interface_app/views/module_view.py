@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from common_app.utils import response, Error, response_fail
+from common_app.utils import BaseAPIView
 from django.forms.models import model_to_dict
 from common_app.utils import Pagination
 from interface_app.models import Project, Module
@@ -82,6 +83,34 @@ class ModuleView(APIView):
             return response(error=Error.MODULE_OBJECT_NULL)
 
         return response()
+
+
+class ModuleTreeView(BaseAPIView):
+
+    def get(self, request, *args, **kwargs):
+        """
+        获得模块树：项目 -> 模型
+        """
+        projects = Project.objects.all()
+        data_list = []
+        for project in projects:
+            project_dict = {
+                "id": project.id,
+                "name": project.name
+            }
+
+            modules = Module.objects.filter(project_id=project.id)
+            module_list = []
+            for module in modules:
+                module_list.append({
+                    "id": module.id,
+                    "name": module.name,
+                })
+
+            project_dict["moduleList"] = module_list
+            data_list.append(project_dict)
+
+        return self.response(data=data_list)
 
 
 # class ModulesView(ListAPIView):

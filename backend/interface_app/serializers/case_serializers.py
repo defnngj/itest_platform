@@ -65,3 +65,32 @@ class CaseValidators(serializers.Serializer):
         instance.name = validated_data.get('name')
         instance.save()
         return instance
+
+
+class DebugValidators(serializers.Serializer):
+    """
+    用例调验证器
+    """
+    url = serializers.CharField(required=True,
+                                error_messages={'required': 'URL不能为空'})
+    method = serializers.ChoiceField(required=True,
+                                     choices=CaseData.methods,
+                                     error_messages={'required': 'method不能为空'})
+    header = serializers.JSONField(required=True)
+    params_type = serializers.ChoiceField(required=True,
+                                          choices=CaseData.params_type,
+                                          error_messages={'required': 'params_type不能为空'})
+    params_body = serializers.JSONField(required=True)
+
+
+class AssertValidators(serializers.Serializer):
+    """
+    断言验证器
+    """
+    result = serializers.CharField(required=True, error_messages={'required': '结果不能为空'})
+    assert_type = serializers.ChoiceField(required=True,
+                                     choices=CaseData.assert_type,
+                                     error_messages={'required': 'method不能为空'})
+    assert_text = serializers.CharField(required=True, error_messages={'required': '断言不能为空'})
+
+

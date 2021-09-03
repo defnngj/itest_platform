@@ -141,7 +141,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
-        'common_app.utils.TokenAuthentication'  # 自定义全局认证
+        # 'common_app.utils.TokenAuthentication'  # 自定义全局认证
     ],
 }
 

@@ -12,8 +12,16 @@ class Error:
     PROJECT_OBJECT_NULL = {"10021": "通过id查询项目不存在"}
     MODULE_ID_NULL = {"10030": "模块id不存在"}
     MODULE_OBJECT_NULL = {"10031": "通过id查询模块不存在"}
+
     CASE_ID_NULL = {"10040": "用例id不存在"}
     CASE_OBJECT_NULL = {"10041": "通过id查询用例不存在"}
+    CASE_URL_NULL = {"10142": "URL不能为空！"}
+    CASE_HEADER_ERROR = {"10143": "Header格式错误，必须是标准的JSON格式!"}
+    CASE_PARAMS_ERROR = {"10144": "参数格式错误，必须是标准的JSON格式!"}
+    CASE_METHOD_NO_SUPPORT = {"10145": "请求方法不支持!"}
+    CASE_PARAMS_NO_SUPPORT = {"10146": "请求参数类型不支持断言相等失败!"}
+    CASE_ASSERT_INCLUDE_FAIL = {"10147": "断言包含失败!"}
+    CASE_ASSERT_EQUAL_FAIL = {"10148": "断言相等失败!"}
 
 
 def response_fail(error=""):
