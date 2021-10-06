@@ -13,14 +13,16 @@ function tellIfIsLogout(data) {
 }
 
 function makeRequest(requestType, url, dataOrParam, responseType, additionalHeader = {}) {
-  const header = {}
-  if (process.env.NODE_ENV === 'local') {
-    header['Access-Control-Allow-Origin'] = '*'
-    header['x-account-email'] = 'test@gmail.com'
-    header['x-account-fullname'] = 'test'
-  } else {
-    header['Access-Control-Allow-Origin'] = '*'
+  const header = {
+    'Access-Control-Allow-Origin': '*'
   }
+  // if (process.env.NODE_ENV === 'local') {
+  //   header['Access-Control-Allow-Origin'] = '*'
+  //   header['x-account-email'] = 'test@gmail.com'
+  //   header['x-account-fullname'] = 'test'
+  // } else {
+  //   header['Access-Control-Allow-Origin'] = '*'
+  // }
 
   Object.keys(additionalHeader).forEach(key => {
     header[key] = additionalHeader[key]

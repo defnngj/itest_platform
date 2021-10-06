@@ -23,7 +23,17 @@ module.exports = {
   // assetsDir: 'static',  // 放置静态资源的目录
   // indexPath: 'index.html', // HTML输出的路径
   devServer: {
-    port: 8080
+    port: 8080,
+    proxy: {
+      '/api': { // 配置到接口包含api使用该代理
+        target: 'http://127.0.0.1:8000/api', // 定义后端的接口
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   },
   configureWebpack: {
     output: {
