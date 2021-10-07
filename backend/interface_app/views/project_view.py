@@ -24,14 +24,18 @@ class ProjectView(APIView):
         """
         获得所有项目 or 一个项目信息
         """
-        print("/project/{}/".format(kwargs.get("pk")))
         pk = kwargs.get("pk")
+        name = request.query_params.dict()["name"]
         if pk is None:
-            projects = Project.objects.filter(is_delete=False).all()
+            projects = Project.objects.filter(name__contains=name, is_delete=False).all()
             pg = Pagination()
             page_project = pg.paginate_queryset(queryset=projects, request=request, view=self)
-            data = serializers.serialize('json', page_project)
-            return response(data=json.loads(data))
+            ser = ProjectQuerySerializer(instance=page_project, many=True)
+            data = {
+                "total": projects.count(),
+                "projectList": ser.data,
+            }
+            return response(data=data)
         else:
             try:
                 project = Project.objects.get(id=pk, is_delete=False)

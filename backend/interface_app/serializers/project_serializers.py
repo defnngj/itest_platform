@@ -8,7 +8,7 @@ class ProjectQuerySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Project
-        fields = ["id", "name", "describe", "status"]
+        fields = ["id", "name", "describe", "status", "create_time", "update_time"]
 
 
 class ProjectSaveSerializer(serializers.Serializer):

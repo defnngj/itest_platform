@@ -33,12 +33,12 @@
                 <template #title>流量日志</template>
               </el-menu-item>
             </router-link>
-            <!-- <router-link to="/project">
+            <router-link to="/project">
               <el-menu-item index="4" class="menu-option">
                 <i class="el-icon-menu"></i>
                 <template #title>项目管理</template>
               </el-menu-item>
-            </router-link> -->
+            </router-link>
             <router-link to="/cases">
               <el-menu-item index="5" class="menu-option">
                 <i class="el-icon-s-grid"></i>
@@ -82,8 +82,8 @@
             <el-dropdown @command="handleCommand" trigger="click" style="margin-top: 10px;">
               <el-avatar size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
               <el-dropdown-menu slot="dropdown" style="width: 120px">
-                <el-dropdown-item command="help_documentation">
-                  <i class="el-icon-tickets"></i>帮助文档
+                <el-dropdown-item command="itest">
+                  <i class="el-icon-s-platform"></i>重定向
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
                   <i class="el-icon-switch-button"></i>退出
@@ -151,8 +151,8 @@ export default {
         case 'logout':
           document.getElementsByClassName('sign-out-btn')[0].click();
           break;
-        case 'help_documentation':
-          window.open('https://docs.google.com/document/d/1Pq46C6rUrp36QiRcf9PN0JZqclPPLmkPFZrIjeJ1hZs/edit?usp=sharing', '_blank')
+        case 'itest':
+          window.open('http://www.itest.info/', '_blank')
           break;
         default:
           break;

@@ -25,12 +25,13 @@
           <el-button cy-data="search-button" type="primary" @click="searchProject">搜索</el-button>
         </span>
         <span class="span-right">
-          <el-input cy-data="search-project" v-model="query.project_name" placeholder="请输入项目名称" clearable></el-input>
+          <el-input cy-data="search-project" v-model="query.name" placeholder="请输入项目名称" clearable></el-input>
         </span>
         <span class="span-left">
           <el-button cy-data="create-project" type="primary" @click="showCreate">创建</el-button>
         </span>
       </div>
+      <!-- 项目表格 -->
       <el-table v-loading="loading" :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="名称">
           <template slot-scope="scope">
@@ -41,7 +42,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="describe" label="备注"> </el-table-column>
-        <el-table-column prop="user_name" label="创建人"> </el-table-column>
+        <el-table-column prop="status" label="状态">
+         <template slot-scope="scope">
+            <span v-if="scope.row.status === true">开启</span>
+            <span v-else> 关闭 </span>
+          </template>
+        </el-table-column>
         <el-table-column prop="create_time" label="创建时间"> </el-table-column>
         <el-table-column prop="update_time" label="更新时间"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="120">
@@ -76,9 +82,9 @@ export default {
       tableData: [],
       dialogFlag: false,
       query: {
-        current_page: 1,
-        page_size: 10,
-        project_name: ''
+        page: 1,
+        size: 10,
+        name: ''
       },
       total: 0
     }
@@ -94,8 +100,8 @@ export default {
     async initProject() {
       const resp = await ProjectApi.getProjects(this.query)
       if (resp.success === true) {
-        this.tableData = resp.result.data
-        this.total = resp.result.item_count
+        this.tableData = resp.data.projectList
+        this.total = resp.data.total
       } else {
         this.$message.error(resp.error.message)
       }
@@ -145,28 +151,29 @@ export default {
 
     // 搜索项目
     async searchProject() {
-      const resp = await ProjectApi.getProjects(this.query)
-      if (resp.success === true) {
-        this.tableData = resp.result.data
-        this.total = resp.result.item_count
-        this.$message({
-          message: '搜索完成！',
-          type: 'success'
-        })
-      } else {
-        this.$message.error(resp.error.message)
-      }
+      this.initProject()
+      // const resp = await ProjectApi.getProjects(this.query)
+      // if (resp.success === true) {
+      //   this.tableData = resp.result.data
+      //   this.total = resp.result.item_count
+      //   this.$message({
+      //     message: '搜索完成！',
+      //     type: 'success'
+      //   })
+      // } else {
+      //   this.$message.error(resp.error.message)
+      // }
     },
 
     // 改变每页显示数量
     handleSizeChange(val) {
-      this.query.page_size = val
+      this.query.size = val
       this.initProject()
     },
 
     // 翻页
     handleCurrentChange(val) {
-      this.query.current_page = val
+      this.query.page = val
       this.initProject()
     }
   }
