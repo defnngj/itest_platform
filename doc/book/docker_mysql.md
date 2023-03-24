@@ -34,7 +34,7 @@ docker run -p 3309:3306 --restart=always --privileged=true --name mysql -v /User
 
 * `/Users/tech/tools/mysql` 本地mysql 数据存储路径。
 
-* `klook101` mysql 登录密码， 用户名默认 `root`。
+* `pawd123` mysql 登录密码， 用户名默认 `root`。
 
 创建数据：
 
