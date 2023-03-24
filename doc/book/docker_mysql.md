@@ -27,7 +27,7 @@ docker.io/library/mysql:5.7
 启动容器
 
 ```shell
-docker run -p 3309:3306 --restart=always --privileged=true --name mysql -v /Users/tech/tools/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="klook101" -d mysql:5.7
+docker run -p 3309:3306 --restart=always --privileged=true --name mysql -v /Users/tech/tools/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="pawd123" -d mysql:5.7
 ```
 
 * `3309` 本地端口，保证本地该端口没有被其他应用占用，映射到 容器里面的mysql的默认端口`3306`。
