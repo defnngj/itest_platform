@@ -1,6 +1,6 @@
 requests==2.20.1
 ddt==1.2.0
 unittest_xml_reporting==3.0.4
-Django==3.1.13
+Django==3.1.14
 xmlrunner==1.7.7
 uwsgi==2.0.19.1
