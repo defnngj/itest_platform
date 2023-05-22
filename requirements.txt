@@ -1,4 +1,4 @@
-requests==2.20.1
+requests==2.31.0
 ddt==1.2.0
 unittest_xml_reporting==3.0.4
 Django==3.1.13
